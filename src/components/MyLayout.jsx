@@ -61,6 +61,7 @@ const MyLayout = ({ children }) => {
                 style={{
                     padding: '0 50px',
                     background: colorBgContainer,
+                    width: '100%',
                 }}
             >
 
@@ -68,6 +69,7 @@ const MyLayout = ({ children }) => {
                     className="site-layout-content"
                     style={{
                         background: colorBgContainer,
+                        width: '100%',
                     }}
                 >
                     {children}
