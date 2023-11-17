@@ -15,15 +15,15 @@ const MultiChoice = ({ btnClick }) => {
         btnClick(checkedList)
     }
     const options = [{
-        key: 1,
+        key: 'input_click',
         name: 'Input',
         cnt: 1233
     }, {
-        key: 2,
+        key: 'process_click',
         name: 'Process',
         cnt: 2343
     }, {
-        key: 3,
+        key: 'output_click',
         name: 'Output',
         cnt: 5543
     }]
@@ -41,7 +41,10 @@ const MultiChoice = ({ btnClick }) => {
                 >
                     {options.map((item) => {
                         return (
-                            <Checkbox value={item.key} key={item.key}>{item.name}<Text italic type="secondary"> ({item.cnt} reads)</Text></Checkbox>
+                            <Checkbox value={item.key} key={item.key}>
+                                {item.name}
+                                {/* <Text italic type="secondary"> ({item.cnt} reads)</Text> */}
+                            </Checkbox>
                         )
                     })}
                 </Checkbox.Group>

@@ -17,7 +17,7 @@ const TalentList = () => {
     const { setData } = useData();
 
     const handleClick = (item) => {
-        console.log(item)
+        // console.log(item)
 
         setData(item); // 将点击的项保存到Context中
         navigate('detail-page'); // 跳转到详情页面

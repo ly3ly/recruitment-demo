@@ -1,159 +1,4 @@
-export const TalentData = /* [
-    {
-        avatarUrl: 'https://xsgames.co/randomusers/avatar.php?g=pixel&key=1',
-        name: 'Zhang San',
-        birth: '1990-01-01',
-        gender: 'Male',
-        education: [{
-            period: '2018-2022',
-            level: 'Bachelor',
-            major: 'Computer Science',
-            school: 'University of Hong Kong'
-        }],
-        matchRate: 90,
-        matchDescription: 'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        expectedSalary: 'HK$50,000/Month',
-        location: 'Hong Kong',
-        position: 'Software Engineer',
-        experience: '3 years',
-        tags: [
-            {
-                name: 'Large-scale language model(LLM) development',
-                color: 'blue'
-            },
-            {
-                name: 'Model optimization',
-                color: 'green'
-            },
-            {
-                name: 'Proficient in Tensorflow',
-                color: 'orange'
-            },
-            {
-                name: 'Exploration of cutting-edge technology',
-                color: 'red'
-            }
-        ],
-        timeLine: [
-            {
-                label: "2022-2023",
-                children: 'Work at University of Hong Kong',
-            },
-            {
-                label: "2018-2022",
-                children: 'Study at University of Hong Kong',
-            },
-        ],
-        review: {
-            rate: 4,
-            desp: "esse cill dolore eu fugiat nulla pariatur"
-        },
-        comments: [
-            {
-                key: "Skills",
-                value: 95
-            },
-            {
-                key: "Experience",
-                value: 92
-            },
-            {
-                key: "Salary",
-                value: 85
-            }
-        ]
-
-    },
-    {
-        avatarUrl: 'https://xsgames.co/randomusers/avatar.php?g=pixel&key=2',
-        name: 'Li Si',
-        birth: '2000-01-01',
-        gender: 'Female',
-        education: [
-            {
-                period: '2022-2023',
-                level: 'Master',
-                major: 'Computer Science',
-                school: 'University of Hong Kong'
-            },
-            {
-                period: '2018-2022',
-                level: 'Bachelor',
-                major: 'Computer Science',
-                school: 'University of Hong Kong'
-            }],
-        expectedSalary: 'HK$20,000/Month',
-        location: 'Hong Kong',
-        position: 'Master Student',
-        experience: 'fresh graduate',
-        tags: [
-            {
-                name: 'Large-scale language model(LLM) development',
-                color: 'blue'
-            },
-            {
-                name: 'Model optimization',
-                color: 'green'
-            },
-            {
-                name: 'Proficient in Tensorflow',
-                color: 'orange'
-            },
-            {
-                name: 'Exploration of cutting-edge technology',
-                color: 'red'
-            }
-        ]
-    },
-    {
-        avatarUrl: 'https://xsgames.co/randomusers/avatar.php?g=pixel&key=3',
-        name: 'Wang Wu',
-        birth: '1999-01-01',
-        gender: 'Male',
-        education: [
-            {
-                period: '2023-now',
-                level: 'PhD',
-                major: 'Computer Science',
-                school: 'University of Hong Kong'
-            },
-            {
-                period: '2022-2023',
-                level: 'Master',
-                major: 'Computer Science',
-                school: 'University of Hong Kong'
-            },
-            {
-                period: '2018-2022',
-                level: 'Bachelor',
-                major: 'Computer Science',
-                school: 'University of Hong Kong'
-            }],
-        expectedSalary: 'HK$30,000/Month',
-        location: 'Macau',
-        position: 'Programmer',
-        experience: '1 years',
-        tags: [
-            {
-                name: 'Large-scale language model(LLM) development',
-                color: 'blue'
-            },
-            {
-                name: 'Model optimization',
-                color: 'green'
-            },
-            {
-                name: 'Proficient in Tensorflow',
-                color: 'orange'
-            },
-            {
-                name: 'Exploration of cutting-edge technology',
-                color: 'red'
-            }
-        ]
-    }
-]*/
-
+export const TalentData =
     [
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=55",
@@ -219,7 +64,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 94
                 }
-            ]
+            ],
+            "subject_id": "603e70e7-a203-4924-a843-a83655f8290a"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=95",
@@ -269,7 +115,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 99
                 }
-            ]
+            ],
+            "subject_id": "9540a1ee-cdac-4c5f-bd39-cd4fa0f55b56"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=82",
@@ -335,7 +182,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 76
                 }
-            ]
+            ],
+            "subject_id": "b780b95a-d7a5-48e9-ba30-fdb2d93429ea"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=21",
@@ -393,7 +241,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 97
                 }
-            ]
+            ],
+            "subject_id": "ed2933c7-2dca-426b-80d0-a9354c1ad33d"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=48",
@@ -443,7 +292,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 77
                 }
-            ]
+            ],
+            "subject_id": "9cc20ace-df9d-46ee-8742-247a4233cde7"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=55",
@@ -513,7 +363,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 89
                 }
-            ]
+            ],
+            "subject_id": "ad0830df-7a69-421a-9a27-21d60547072c"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=56",
@@ -579,7 +430,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 86
                 }
-            ]
+            ],
+            "subject_id": "d4da5406-cd0d-43c1-a62a-0b6e0a46b857"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=10",
@@ -641,7 +493,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 77
                 }
-            ]
+            ],
+            "subject_id": "372341f0-ee30-4e49-9ed5-ab9a779d9d3e"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=9",
@@ -699,7 +552,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 87
                 }
-            ]
+            ],
+            "subject_id": "8cbc7b1d-dcba-4ad3-a5d5-175fa61d6856"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=9",
@@ -753,7 +607,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 99
                 }
-            ]
+            ],
+            "subject_id": "a401ca21-9aab-4835-b551-5d7d7d004033"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=2",
@@ -811,7 +666,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 77
                 }
-            ]
+            ],
+            "subject_id": "36c78303-d7ee-42ff-aa83-5a41ca09a594"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=72",
@@ -869,7 +725,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 90
                 }
-            ]
+            ],
+            "subject_id": "8f637d31-f98d-4dc3-b5cd-857e7276a31c"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=79",
@@ -931,7 +788,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 81
                 }
-            ]
+            ],
+            "subject_id": "06d115f7-9b4d-4afc-897f-0819a6d1218c"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=53",
@@ -989,7 +847,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 79
                 }
-            ]
+            ],
+            "subject_id": "5915e3a7-8ced-4aea-94dd-45a163ad7d4a"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=52",
@@ -1047,7 +906,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 84
                 }
-            ]
+            ],
+            "subject_id": "b6379a80-7b75-4cd1-9bb4-afed82888c78"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=55",
@@ -1105,7 +965,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 83
                 }
-            ]
+            ],
+            "subject_id": "b2384e24-f240-4032-8ccb-dc62b6b0abe6"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=79",
@@ -1163,7 +1024,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 87
                 }
-            ]
+            ],
+            "subject_id": "f1bfa697-7a7e-468a-ae6a-72851421c5db"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=73",
@@ -1229,7 +1091,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 95
                 }
-            ]
+            ],
+            "subject_id": "3fd3a517-711e-421b-99da-b0c069120bd9"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=72",
@@ -1295,7 +1158,8 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 86
                 }
-            ]
+            ],
+            "subject_id": "bb5c7a15-5115-45b6-9448-61b8d743e8ee"
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=92",
@@ -1357,6 +1221,35 @@ export const TalentData = /* [
                     "key": "Salary",
                     "value": 87
                 }
-            ]
+            ],
+            "subject_id": "a6b0ba15-c8ac-404e-9510-7078643360fc"
         }
     ]
+
+
+// import { uuid } from 'uuidv4';
+// import fs from 'fs';
+
+
+// let newList = []
+// TalentData.forEach((item) => {
+//     item.subject_id = uuid()
+//     newList.push(item)
+// })
+
+// console.log(newList)
+
+
+// function saveToFile(content, fileName) {
+//     fs.writeFile(fileName, content, (err) => {
+//         if (err) {
+//             console.error(err);
+//             return;
+//         }
+//         console.log(`Content saved to ${fileName} successfully.`);
+//     });
+// }
+
+// const fileName = 'example.txt';
+
+// saveToFile(JSON.stringify(newList), fileName);
