@@ -5,6 +5,7 @@ const apiClient = axios.create({
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
+        'Origin': 'https://recruitment-demo.vercel.app/#/detail-page'
     },
 });
 
