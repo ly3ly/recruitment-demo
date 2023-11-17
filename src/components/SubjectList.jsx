@@ -23,7 +23,7 @@ const SubjectList = () => {
 
     // }
     const getData = () => {
-        fetch('https://qibyjk53c5.execute-api.ap-southeast-1.amazonaws.com/subjects', {
+        fetch('/backend/subjects', {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',

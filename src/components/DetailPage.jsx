@@ -73,7 +73,7 @@ const DetailPage = () => {
         // } catch (error) {
         //     console.error(error); // 处理错误
         // }
-        fetch('https://qibyjk53c5.execute-api.ap-southeast-1.amazonaws.com/subjects', {
+        fetch('/backend/subjects', {
             method: 'PUT',
             body: JSON.stringify({
                 "subject_id": subject_id,
