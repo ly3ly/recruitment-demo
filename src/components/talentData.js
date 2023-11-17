@@ -2,7 +2,7 @@ export const TalentData =
     [
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=55",
-            "name": "Zhang San",
+            "name": "Sample Talent 1",
             "birth": "1986-01-14",
             "gender": "Male",
             "education": [
@@ -69,7 +69,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=95",
-            "name": "Zhang San",
+            "name": "Sample Talent 2",
             "birth": "1977-02-03",
             "gender": "Male",
             "education": [
@@ -120,7 +120,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=82",
-            "name": "Zhang San",
+            "name": "Sample Talent 3",
             "birth": "1988-02-27",
             "gender": "Female",
             "education": [
@@ -187,7 +187,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=21",
-            "name": "Zhang San",
+            "name": "Sample Talent 4",
             "birth": "1977-07-02",
             "gender": "Male",
             "education": [
@@ -246,7 +246,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=48",
-            "name": "Zhang San",
+            "name": "Sample Talent 5",
             "birth": "1970-02-28",
             "gender": "Male",
             "education": [
@@ -297,7 +297,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=55",
-            "name": "Zhang San",
+            "name": "Sample Talent 6",
             "birth": "1993-10-25",
             "gender": "Male",
             "education": [
@@ -368,7 +368,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=56",
-            "name": "Zhang San",
+            "name": "Sample Talent 7",
             "birth": "1990-11-13",
             "gender": "Male",
             "education": [
@@ -435,7 +435,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=10",
-            "name": "Zhang San",
+            "name": "Sample Talent 8",
             "birth": "1970-10-09",
             "gender": "Female",
             "education": [
@@ -498,7 +498,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=9",
-            "name": "Zhang San",
+            "name": "Sample Talent 9",
             "birth": "1988-09-09",
             "gender": "Female",
             "education": [
@@ -557,7 +557,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=9",
-            "name": "Zhang San",
+            "name": "Sample Talent 10",
             "birth": "1991-04-17",
             "gender": "Female",
             "education": [
@@ -612,7 +612,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=2",
-            "name": "Zhang San",
+            "name": "Sample Talent 11",
             "birth": "1994-08-05",
             "gender": "Female",
             "education": [
@@ -671,7 +671,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=72",
-            "name": "Zhang San",
+            "name": "Sample Talent 12",
             "birth": "1985-04-27",
             "gender": "Female",
             "education": [
@@ -730,7 +730,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=79",
-            "name": "Zhang San",
+            "name": "Sample Talent 13",
             "birth": "1982-06-09",
             "gender": "Female",
             "education": [
@@ -793,7 +793,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=53",
-            "name": "Zhang San",
+            "name": "Sample Talent 14",
             "birth": "1975-06-11",
             "gender": "Male",
             "education": [
@@ -852,7 +852,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=52",
-            "name": "Zhang San",
+            "name": "Sample Talent 15",
             "birth": "1977-09-11",
             "gender": "Female",
             "education": [
@@ -911,7 +911,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=55",
-            "name": "Zhang San",
+            "name": "Sample Talent 16",
             "birth": "1978-07-14",
             "gender": "Male",
             "education": [
@@ -970,7 +970,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=79",
-            "name": "Zhang San",
+            "name": "Sample Talent 17",
             "birth": "1978-08-08",
             "gender": "Male",
             "education": [
@@ -1029,7 +1029,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=73",
-            "name": "Zhang San",
+            "name": "Sample Talent 18",
             "birth": "1993-06-21",
             "gender": "Female",
             "education": [
@@ -1096,7 +1096,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=72",
-            "name": "Zhang San",
+            "name": "Sample Talent 19",
             "birth": "1975-11-09",
             "gender": "Female",
             "education": [
@@ -1163,7 +1163,7 @@ export const TalentData =
         },
         {
             "avatarUrl": "https://xsgames.co/randomusers/avatar.php?g=pixel&key=92",
-            "name": "Zhang San",
+            "name": "Sample Talent 20",
             "birth": "1996-12-27",
             "gender": "Male",
             "education": [
@@ -1232,12 +1232,13 @@ export const TalentData =
 
 
 // let newList = []
-// TalentData.forEach((item) => {
-//     item.subject_id = uuid()
+// TalentData.forEach((item, index) => {
+//     // item.subject_id = uuid()
+//     item.name = `Sample Talent ${index + 1}`
 //     newList.push(item)
 // })
 
-// console.log(newList)
+// // console.log(newList)
 
 
 // function saveToFile(content, fileName) {

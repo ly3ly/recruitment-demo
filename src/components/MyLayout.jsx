@@ -17,6 +17,7 @@ const MyLayout = ({ children }) => {
             >
                 <div className="demo-logo" />
                 <Menu
+                    selectable={false}
                     theme="dark"
                     mode="horizontal"
                     defaultSelectedKeys={['2']}

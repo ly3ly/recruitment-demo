@@ -12,7 +12,6 @@ import MultiChoice from './MultiChoice';
 
 
 import { Modal } from 'antd';
-// import { updateCheck } from '../../api/check';
 const PopupModal = ({ show, dataList }) => {
     const [thisShow, setShow] = useState(false)
 
