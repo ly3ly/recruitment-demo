@@ -24,7 +24,8 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.16.0",
     "styled-components": "^6.1.1",
-    "tslib": "^1.9.3"
+    "tslib": "^1.9.3",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
