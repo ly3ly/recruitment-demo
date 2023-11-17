@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import { Button, Checkbox, Row, Col, Tooltip, Typography } from 'antd';
-const { Text } = Typography;
+import { Button, Checkbox, Row, Col, Tooltip } from 'antd';
+// import {Typography} from 'antd';
+// const { Text } = Typography;
 // const CheckboxGroup = Checkbox.Group;
 // const plainOptions = ['Input', 'Process', 'Output'];
 const defaultCheckedList = ['Input'];

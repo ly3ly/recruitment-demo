@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 // DataContext.js
-import React, { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext } from 'react';
 
 const DataContext = createContext();
 

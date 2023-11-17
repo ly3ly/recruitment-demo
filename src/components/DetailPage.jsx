@@ -12,7 +12,7 @@ import MultiChoice from './MultiChoice';
 
 
 import { Modal } from 'antd';
-import { updateCheck } from '../../api/check';
+// import { updateCheck } from '../../api/check';
 const PopupModal = ({ show, dataList }) => {
     const [thisShow, setShow] = useState(false)
 
@@ -63,16 +63,33 @@ const DetailPage = () => {
     }
 
     const updateToDatabase = async (checkData, subject_id) => {
-        try {
-            await updateCheck({
+        // try {
+        //     await updateCheck({
+        //         "subject_id": subject_id,
+        //         "input_click": checkData.includes("input_click") ? 1 : 0,
+        //         "process_click": checkData.includes("process_click") ? 1 : 0,
+        //         "output_click": checkData.includes("output_click") ? 1 : 0
+        //     })
+        // } catch (error) {
+        //     console.error(error); // 处理错误
+        // }
+        fetch('https://qibyjk53c5.execute-api.ap-southeast-1.amazonaws.com/subjects', {
+            method: 'PUT',
+            body: JSON.stringify({
                 "subject_id": subject_id,
                 "input_click": checkData.includes("input_click") ? 1 : 0,
                 "process_click": checkData.includes("process_click") ? 1 : 0,
                 "output_click": checkData.includes("output_click") ? 1 : 0
-            })
-        } catch (error) {
-            console.error(error); // 处理错误
-        }
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'Origin': 'https://recruitment-demo.vercel.app/'
+            },
+        }).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
 
@@ -197,10 +214,10 @@ const DetailPage = () => {
 
                     <Title level={3}>Recommend Explanation</Title>
                     <Text style={{ marginRight: '10px' }}>I recommend this talent, click here to see the explanations.</Text>
-                    <MultiChoice btnClick={async (val) => {
+                    <MultiChoice btnClick={(val) => {
                         setCheckedList(val)
                         setIsModalOpen(!isModalOpen)
-                        await updateToDatabase(val, data?.subject_id)
+                        updateToDatabase(val, data?.subject_id)
                         // console.log(val)
                     }}></MultiChoice>
                 </Col>

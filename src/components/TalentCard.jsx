@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
 import { Card } from 'antd';
-import { Divider, Tag, Row, Col, Avatar, Typography } from "antd";
+import { Divider, Tag, Row, Col, Typography } from "antd";
+// import {Avatar} from "antd;"
 const { Text } = Typography;
 import {
     EnvironmentOutlined,
     CalendarOutlined,
-    MoneyCollectOutlined,
+    // MoneyCollectOutlined,
     BankOutlined
 } from '@ant-design/icons';
 
 
-const TalentCard = ({ avatarUrl, name, birth, gender, expectedSalary, tags, location, position, experience }) => {
+const TalentCard = ({ /*avatarUrl, */name, birth, gender, expectedSalary, tags, location, position, experience }) => {
 
     return (
         <>
