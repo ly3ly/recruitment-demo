@@ -62,17 +62,7 @@ const DetailPage = () => {
         return <div>No data available.</div>;
     }
 
-    const updateToDatabase = async (checkData, subject_id) => {
-        // try {
-        //     await updateCheck({
-        //         "subject_id": subject_id,
-        //         "input_click": checkData.includes("input_click") ? 1 : 0,
-        //         "process_click": checkData.includes("process_click") ? 1 : 0,
-        //         "output_click": checkData.includes("output_click") ? 1 : 0
-        //     })
-        // } catch (error) {
-        //     console.error(error); // 处理错误
-        // }
+    const updateToDatabase = (checkData, subject_id) => {
         fetch('/backend/subjects', {
             method: 'PUT',
             body: JSON.stringify({

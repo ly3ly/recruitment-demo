@@ -8,20 +8,8 @@ const SubjectList = () => {
     const [subjectList, setSubjectList] = useState([]);
     useEffect(() => {
         getData();
-        // console.log(data)
-        // setSubjectList(data)
     }, [])
 
-    // const getData = async () => {
-    //     let response;
-    //     try {
-    //         response = await fetchCheck();
-    //     } catch (error) {
-    //         response = error
-    //     }
-    //     return response
-
-    // }
     const getData = () => {
         fetch('/backend/subjects', {
             method: 'GET',
@@ -29,11 +17,13 @@ const SubjectList = () => {
                 'Content-type': 'application/json; charset=UTF-8',
                 'Origin': 'https://recruitment-demo.vercel.app/'
             },
-        }).then(res => {
-            console.log(res)
-        }).catch(err => {
-            console.log(err)
-        })
+        }).then(res => res.json()) // 使用json()方法解析响应数据
+            .then(data => {
+                console.log(data); // 响应数据
+                setSubjectList(data?.data);
+            }).catch(err => {
+                console.log(err)
+            })
     }
 
     return (
