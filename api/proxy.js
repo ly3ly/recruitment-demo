@@ -1,10 +1,8 @@
-/* eslint-disable no-undef */
-// 该服务为 vercel serve跨域处理
-const {
-    createProxyMiddleware
-} = require('http-proxy-middleware')
 
-module.exports = (req, res) => {
+// 该服务为 vercel serve跨域处理
+import { createProxyMiddleware } from 'http-proxy-middleware'
+
+export default (req, res) => {
     let target = ''
 
     // 代理目标地址
