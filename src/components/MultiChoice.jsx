@@ -50,7 +50,7 @@ const MultiChoice = ({ btnClick }) => {
                     })}
                 </Checkbox.Group>
                 {/* <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} /> */}
-                <Button type='primary' onClick={checkBtnClick}>Check</Button>
+                <Button type='primary' onClick={checkBtnClick} style={{ width: '40%', marginLeft: '15%' }}>Check</Button>
             </Row>
         </>
     );
