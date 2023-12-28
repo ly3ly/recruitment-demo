@@ -1,9 +1,20 @@
 import { Layout, Menu, theme, FloatButton, Typography, Button } from 'antd';
 const { Header, Content, Footer } = Layout;
 import { CommentOutlined, CustomerServiceOutlined, RobotOutlined } from '@ant-design/icons';
-
+import { Logout as LogoutApi } from '../services/user'
+import { useNavigate } from "react-router-dom";
 const { Text } = Typography;
 const MyLayout = ({ children }) => {
+    const navigate = useNavigate();
+
+    const userLogoutFcn = async () => {
+        let res = await LogoutApi();
+        console.log(res);
+        localStorage.removeItem('userInfo');
+        navigate('/');
+    }
+
+
     const {
         token: { colorBgContainer },
     } = theme.useToken();
@@ -33,31 +44,12 @@ const MyLayout = ({ children }) => {
                     ]}
                 />
                 <Text style={{ marginLeft: 'auto', paddingRight: '20px' }}><a style={{ color: 'white' }}>Hire now</a></Text>
-                <Button type="primary" ghost >
-                    <Text style={{ color: 'white' }}>Login</Text>
+                <Button type="primary" ghost onClick={userLogoutFcn}>
+                    <Text style={{ color: 'white' }}>Logout</Text>
                 </Button>
 
             </Header>
-            {/* <Header
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-            >
-                <div className="demo-logo" />
-                <Menu
-                    theme="dark"
-                    mode="horizontal"
-                    defaultSelectedKeys={['2']}
-                    items={new Array(15).fill(null).map((_, index) => {
-                        const key = index + 1;
-                        return {
-                            key,
-                            label: `nav ${key}`,
-                        };
-                    })}
-                />
-            </Header> */}
+
             <Content
                 style={{
                     padding: '0 50px',

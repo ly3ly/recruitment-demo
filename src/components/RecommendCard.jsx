@@ -7,8 +7,11 @@ import { EnvironmentOutlined, BankOutlined, CalendarOutlined } from '@ant-design
 import { HeartOutlined, MessageOutlined, HeartTwoTone } from '@ant-design/icons';
 const { Text, Title } = Typography;
 import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 import { useEffect, useState } from 'react';
 import MultiChoice from './MultiChoice';
+
+import { UpdateSubjectOpt as UpdateSubjectApi } from '../services/user'
 
 
 import { Modal } from 'antd';
@@ -49,31 +52,57 @@ const PopupModal = ({ show, dataList }) => {
 };
 
 
-const RecommendCard = (data) => {
+const RecommendCard = () => {
     const [collect, setCollect] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [checkList, setCheckedList] = useState([]);
 
 
+    const storedUser = localStorage.getItem('userInfo');
+    let userInfo = JSON.parse(storedUser)
 
-    const updateToDatabase = (checkData, subject_id) => {
-        fetch('/backend/subjects', {
-            method: 'PUT',
-            body: JSON.stringify({
-                "subject_id": subject_id,
-                "input_click": checkData.includes("input_click") ? 1 : 0,
-                "process_click": checkData.includes("process_click") ? 1 : 0,
-                "output_click": checkData.includes("output_click") ? 1 : 0
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-                'Origin': 'https://recruitment-demo.vercel.app/'
-            },
-        }).then(res => {
-            console.log(res)
-        }).catch(err => {
-            console.log(err)
-        })
+
+    const updateToDatabase = async (checkData) => {
+
+
+        let reqdata = {
+            "user_id": Number(userInfo.subject_id),
+            "user_name": userInfo.subject_name,
+            "input_click": checkData.includes("input_click") ? 1 : 0,
+            "process_click": checkData.includes("process_click") ? 1 : 0,
+            "output_click": checkData.includes("output_click") ? 1 : 0
+        }
+        try {
+            console.log("reqdata->", reqdata)
+            let res = await UpdateSubjectApi(reqdata);
+            // console.log(res)
+            if (res.code != 0) {
+                message.error(res.msg)
+            }
+
+        } catch (error) {
+            console.log(error);
+            message.error(error);
+        }
+
+        // fetch('/backend/subjects', {
+        //     method: 'PUT',
+        //     body: JSON.stringify({
+        //         "user_id": subject.subject_id,
+        //         "user_name": subject.user_name,
+        //         "input_click": checkData.includes("input_click") ? 1 : 0,
+        //         "process_click": checkData.includes("process_click") ? 1 : 0,
+        //         "output_click": checkData.includes("output_click") ? 1 : 0
+        //     }),
+        //     headers: {
+        //         'Content-type': 'application/json; charset=UTF-8',
+        //         'Origin': 'https://recruitment-demo.vercel.app/'
+        //     },
+        // }).then(res => {
+        //     console.log(res)
+        // }).catch(err => {
+        //     console.log(err)
+        // })
     }
 
 
@@ -96,7 +125,7 @@ const RecommendCard = (data) => {
                             }
                             setCheckedList(val)
                             setIsModalOpen(!isModalOpen)
-                            updateToDatabase(val, data?.subject_id)
+                            updateToDatabase(val)
                             // console.log(val)
                         }}></MultiChoice>
                     </Col>

@@ -201,14 +201,14 @@ const DetailPage = () => {
                         </Col>
                     </Row>
 
-                    <Title level={3}>Recommend Explanation</Title>
+                    {/* <Title level={3}>Recommend Explanation</Title>
                     <Text style={{ marginRight: '10px' }}>I recommend this talent, click here to see the explanations.</Text>
                     <MultiChoice btnClick={(val) => {
                         setCheckedList(val)
                         setIsModalOpen(!isModalOpen)
                         updateToDatabase(val, data?.subject_id)
-                        // console.log(val)
-                    }}></MultiChoice>
+                    }}></MultiChoice> */}
+
                 </Col>
             </Card>
             <PopupModal show={isModalOpen} dataList={checkList} />
