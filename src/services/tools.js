@@ -3,7 +3,7 @@
 /**
  * 服务器地址
  */
-export const serverUrl = "http://43.156.54.192:3000";
+export const serverUrl = "http://43.156.54.192";
 
 /**
  * 设置token

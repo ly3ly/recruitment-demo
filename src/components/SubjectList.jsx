@@ -3,12 +3,21 @@ import { Table, message } from "antd"
 const { Column } = Table;
 import { GetSubjectOptList as GetSubjectOptListApi } from "../services/user"
 
+import { useNavigate } from 'react-router-dom';
 
 
 const SubjectList = () => {
     const [subjectList, setSubjectList] = useState([]);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
     useEffect(() => {
+        const storedUser = localStorage.getItem('userInfo');
+        if (storedUser) {
+            // setSubject(JSON.parse(storedUser));
+        } else {
+            navigate('/');
+        }
         getData();
     }, [])
 
