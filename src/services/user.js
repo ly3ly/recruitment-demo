@@ -22,3 +22,7 @@ export const Logout = () => del(serverUrl + "/api/v1/user/logout", {});
 export const UpdateSubjectOpt = (data) => put(serverUrl + "/api/v1/user/subjects", data);
 
 export const GetSubjectOptList = () => get(serverUrl + "/api/v1/user/subjects");
+
+export const UpdateOptTime = (data) => put(serverUrl + "/api/v1/user/records", data);
+
+export const GetRecordList = () => get(serverUrl + "/api/v1/user/records");

@@ -1,7 +1,7 @@
 import { Row, Col, Card, Form, Input, Button, Typography } from "antd";
 const { Text } = Typography;
 import { useNavigate } from "react-router-dom";
-import { Login as LoginApi } from "../services/user";
+import { Login as LoginApi, UpdateOptTime as UpdateTimeApi } from "../services/user";
 import { message } from 'antd';
 
 const Login = () => {
@@ -36,9 +36,23 @@ const Login = () => {
                   message.error(res2.msg);
                   return;
                 }
+
+                //
+                let time_res = await UpdateTimeApi({
+                  user_id: res2.data.id,
+                  user_name: res2.data.user_name,
+                  serial_uuid: "none",
+                  time_type: 1
+                })
+                if (time_res.code != 0){
+                  // message.error(time_res.msg + " operate time won't be recorded...");
+                  console.log("operate time won't be recorded...",time_res.msg)
+                }
+
                 localStorage.setItem('userInfo', JSON.stringify({
                   subject_id: res2.data.id,
-                  subject_name: res2.data.user_name
+                  subject_name: res2.data.user_name,
+                  serial_uuid: time_res?.data?.serial_uuid || "none"
                 }));
 
                 navigate('/home');

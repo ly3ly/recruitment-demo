@@ -12,13 +12,11 @@ function App() {
   return (
     <DataProvider>
       <MyLayout>
-        {/* <Router> */}
         <Routes >
           <Route path="/" element={<TalentList />} />
           <Route path="/detail-page" element={<DetailPage />} />
           <Route path="/subjects" element={<SubjectList />} />
         </Routes>
-        {/* </Router> */}
       </MyLayout>
     </DataProvider >
   )

@@ -6,6 +6,7 @@ import './index.css'
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx'
 import App from './App.jsx'
+import RecommendPage from './components/RecommendPage.jsx'
 
 // ReactDOM.createRoot(document.getElementById('root')).render(
 //   <Router>
@@ -20,7 +21,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Router>
     <ConfigProvider locale={enUS}>
       <Routes>
-        <Route path="*" element={<Login />} />
+        <Route path="*"   element={<RecommendPage />}/> 
+        {/* <Route path="*" element={<Login />} /> */}
         <Route path="/register" element={<Register />} />
         <Route path="/home/*" element={<App />} />
       </Routes>

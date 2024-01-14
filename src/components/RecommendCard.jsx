@@ -44,9 +44,6 @@ const PopupModal = ({ show, dataList }) => {
                     </div>
                 )
             })}
-
-            {/* <Title level={3}>Explanation Type</Title> */}
-            {/* <MultiChoice></MultiChoice> */}
         </Modal>
     );
 };
@@ -85,24 +82,6 @@ const RecommendCard = () => {
             message.error(error);
         }
 
-        // fetch('/backend/subjects', {
-        //     method: 'PUT',
-        //     body: JSON.stringify({
-        //         "user_id": subject.subject_id,
-        //         "user_name": subject.user_name,
-        //         "input_click": checkData.includes("input_click") ? 1 : 0,
-        //         "process_click": checkData.includes("process_click") ? 1 : 0,
-        //         "output_click": checkData.includes("output_click") ? 1 : 0
-        //     }),
-        //     headers: {
-        //         'Content-type': 'application/json; charset=UTF-8',
-        //         'Origin': 'https://recruitment-demo.vercel.app/'
-        //     },
-        // }).then(res => {
-        //     console.log(res)
-        // }).catch(err => {
-        //     console.log(err)
-        // })
     }
 
 
@@ -126,22 +105,11 @@ const RecommendCard = () => {
                             setCheckedList(val)
                             setIsModalOpen(!isModalOpen)
                             updateToDatabase(val)
-                            // console.log(val)
+                         
                         }}></MultiChoice>
                     </Col>
                 </Row>
 
-                {/* <Title level={3}>Recommend Explanation</Title>
-                <Text style={{ marginRight: '10px' }}>I recommend these talents, click here to see the explanations.</Text>
-                <MultiChoice btnClick={(val) => {
-                    if (val.length === 0) {
-                        return
-                    }
-                    setCheckedList(val)
-                    setIsModalOpen(!isModalOpen)
-                    updateToDatabase(val, data?.subject_id)
-                    // console.log(val)
-                }}></MultiChoice> */}
 
             </Card>
             <PopupModal show={isModalOpen} dataList={checkList} />
