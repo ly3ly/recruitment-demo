@@ -21,8 +21,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Router>
     <ConfigProvider locale={enUS}>
       <Routes>
-        <Route path="*"   element={<RecommendPage />}/> 
-        {/* <Route path="*" element={<Login />} /> */}
+        {/* <Route path="*"   element={<RecommendPage />}/>  */}
+        <Route path="*" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home/*" element={<App />} />
       </Routes>

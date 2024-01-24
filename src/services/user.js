@@ -25,4 +25,6 @@ export const GetSubjectOptList = () => get(serverUrl + "/api/v1/user/subjects");
 
 export const UpdateOptTime = (data) => put(serverUrl + "/api/v1/user/records", data);
 
-export const GetRecordList = () => get(serverUrl + "/api/v1/user/records");
+export const GetRecordList = () => get(serverUrl + "/api/v1/admin/user/records");
+
+export const VISIT_TYPE = 1;

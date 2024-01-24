@@ -17,6 +17,8 @@ import DespCard from "./DespCard";
 import { Col, Row, Card } from "antd";
 import explainIMG from "../assets/explain.svg";
 import { UpdateOptTime as UpdateTimeApi } from "../services/user";
+import { VISIT_TYPE } from "../services/user";
+import { getToken, wsUrl } from "../services/tools";
 
 const CandidateCard = ({ candidate_name, match_rate, sid1, sid2, desp2 }) => {
   return (
@@ -216,52 +218,93 @@ const JobColumns = [
 
 const RecommendPage = () => {
   const [showExplain, setShowExplain] = useState(false);
-  let userInfo;
+  const [userInfo, setUserInfo] = useState({});
   useEffect(() => {
     const storedUser = localStorage.getItem("userInfo");
-    userInfo = JSON.parse(storedUser);
+    setUserInfo(JSON.parse(storedUser))
+
+    const ws = new WebSocket(wsUrl);
+
+    ws.onopen = function (event) {
+      console.log('connected');
+      var msg = getToken();
+      console.log(event.data, msg);
+      if (msg != "") {
+        ws.send(getToken());
+      }
+    }
+    ws.onmessage = function (event) {
+      var msg = getToken();
+      console.log(event.data, msg);
+      if (msg != "") {
+        ws.send(getToken());
+      }
+    };
+    return () => {
+      ws.close();
+    };
+
   }, []);
+
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, []);
+
 
   useEffect(() => {
-    window.addEventListener("beforeunload", handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
   }, []);
 
-  const handleBeforeUnload = async (event) => {
+  const handleBeforeUnload = (event) => {
     event.preventDefault();
     event.returnValue = "";
+    const storedUser = localStorage.getItem("userInfo");
+    setUserInfo(JSON.parse(storedUser))
+    console.log("userInfo", userInfo);
     try {
-        let time_res = await UpdateTimeApi({
-            user_id: userInfo.subject_id,
-            user_name: userInfo.subject_name,
-            serial_uuid: userInfo.serial_uuid,
-            time_type: 2,
-          });
-          if (time_res.code !=0) {
-            console.log('update time1 error...',time_res)
+      UpdateTimeApi({
+        user_id: userInfo.subject_id,
+        user_name: userInfo.subject_name,
+        serial_uuid: userInfo.serial_uuid,
+        visit_type: VISIT_TYPE,
+        time_type: 2,
+      })
+        .then((time_res) => {
+          if (time_res.code !== 0) {
+            console.log('update time1 error...', time_res);
           }
 
-          if (showExplain){
-            let time_res2 = await UpdateTimeApi({
-                user_id: userInfo.subject_id,
-                user_name: userInfo.subject_name,
-                serial_uuid: userInfo.serial_uuid,
-                time_type: 4,
+          if (showExplain) {
+            UpdateTimeApi({
+              user_id: userInfo.subject_id,
+              user_name: userInfo.subject_name,
+              serial_uuid: userInfo.serial_uuid,
+              visit_type: VISIT_TYPE,
+              time_type: 4,
+            })
+              .then((time_res2) => {
+                if (time_res2.code !== 0) {
+                  console.log('update time2 error...', time_res2);
+                }
+              })
+              .catch((error) => {
+                console.log('update time2 error...', error);
               });
-              if (time_res2.code !=0) {
-                console.log('update time2 error...',time_res2)
-              }
           }
-
+        })
+        .catch((error) => {
+          console.log('update time1 error...', error);
+        });
     } catch (error) {
-        console.log('update time error...',error)
+      console.log('update time error...', error);
     }
 
-  };
-  
+  }
+
   return (
     <>
       <Modal
@@ -269,21 +312,26 @@ const RecommendPage = () => {
         open={showExplain}
         footer={null}
         maskClosable={false}
-        onCancel={async () => {
-          setShowExplain(false);
+        afterClose={async () => {
+          console.log('modal is closed...')
           try {
             let time_res = await UpdateTimeApi({
-                user_id: userInfo.subject_id,
-                user_name: userInfo.subject_name,
-                serial_uuid: userInfo.serial_uuid,
-                time_type: 4,
-              });
-              if (time_res.code !=0) {
-                console.log('update time error...',time_res)
-              }
-         } catch (error) {
-            console.log('update time error...',error)
-         }
+              user_id: userInfo.subject_id,
+              user_name: userInfo.subject_name,
+              serial_uuid: userInfo.serial_uuid,
+              visit_type: VISIT_TYPE,
+              time_type: 4,
+            });
+            if (time_res.code != 0) {
+              console.log('update time error...', time_res)
+            }
+          } catch (error) {
+            console.log('update time error...', error)
+          }
+        }}
+        onCancel={() => {
+          setShowExplain(false);
+
         }}
         style={{ maxHeight: "80vh", overflow: "scroll" }}
       >
@@ -448,19 +496,20 @@ const RecommendPage = () => {
                     type="primary"
                     onClick={async () => {
                       setShowExplain(true);
-                     try {
+                      try {
                         let time_res = await UpdateTimeApi({
-                            user_id: userInfo.subject_id,
-                            user_name: userInfo.subject_name,
-                            serial_uuid: userInfo.serial_uuid,
-                            time_type: 3,
-                          });
-                          if (time_res.code !=0) {
-                            console.log('update time error...',time_res)
-                          }
-                     } catch (error) {
-                        console.log('update time error...',error)
-                     }
+                          user_id: userInfo.subject_id,
+                          user_name: userInfo.subject_name,
+                          serial_uuid: userInfo.serial_uuid,
+                          visit_type: VISIT_TYPE,
+                          time_type: 3,
+                        });
+                        if (time_res.code != 0) {
+                          console.log('update time error...', time_res)
+                        }
+                      } catch (error) {
+                        console.log('update time error...', error)
+                      }
                     }}
                   >
                     Explanation

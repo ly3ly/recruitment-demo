@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Table, message } from "antd"
 const { Column } = Table;
-import { GetSubjectOptList as GetSubjectOptListApi } from "../services/user"
+import { GetRecordList as GetSubjectOptListApi } from "../services/user"
 
 import { useNavigate } from 'react-router-dom';
 
@@ -12,12 +12,12 @@ const SubjectList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('userInfo');
-        if (storedUser) {
-            // setSubject(JSON.parse(storedUser));
-        } else {
-            navigate('/');
-        }
+        // const storedUser = localStorage.getItem('userInfo');
+        // if (storedUser) {
+        //     // setSubject(JSON.parse(storedUser));
+        // } else {
+        //     navigate('/');
+        // }
         getData();
     }, [])
 
@@ -40,63 +40,65 @@ const SubjectList = () => {
             message.error(error);
 
         }
-
-        // fetch('/backend/subjects', {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-type': 'application/json; charset=UTF-8',
-        //         'Origin': 'https://recruitment-demo.vercel.app/'
-        //     },
-        // }).then(res => res.json()) // 使用json()方法解析响应数据
-        //     .then(data => {
-        //         console.log(data); // 响应数据
-        //         setLoading(false);
-        //         setSubjectList(data?.data);
-        //     }).catch(err => {
-        //         console.log(err)
-        //         setLoading(false);
-        //     })
     }
     const columns = [
         {
             align: "center",
-            title: 'Subject ID',
-            dataIndex: 'UserId',
-            key: 'UserId',
+            title: 'Record Index',
+            dataIndex: 'ID',
+            key: 'ID',
+            width: '150px',
             render: (text) => <a>{text}</a>,
         },
         {
             align: "center",
-            title: 'Subject Name',
+            title: 'Operator',
             dataIndex: 'UserName',
             key: 'UserName',
+            width: '150px',
             render: (text) => <a>{text}</a>,
         },
         {
             align: "center",
-            title: 'Input Check',
-            dataIndex: 'InputCheck',
-            key: 'InputCheck',
+            title: 'Operate Index',
+            dataIndex: 'SerialUUID',
+            key: 'SerialUUID',
+            width: '170px',
         },
         {
             align: "center",
-            title: 'Process Check',
-            dataIndex: 'ProcessCheck',
-            key: 'ProcessCheck',
+            title: 'Explanation Type',
+            dataIndex: 'VisitType',
+            key: 'VisitType',
+            render: (text) => <div>{text == 1 ? 'input-process-output' : text == 2 ? 'input' : text == 3 ? 'process' : text == 4 ? 'output' : text == 5 ? 'none' : 'undefined'}</div>,
         },
         {
             align: "center",
-            title: 'Output Check',
-            dataIndex: 'OutputCheck',
-            key: 'OutputCheck',
+            title: 'Visit Time',
+            dataIndex: 'VisitTime_t',
+            key: 'VisitTime_t',
+            render: (text) => <div>{text}s</div>
         },
         {
             align: "center",
-            title: 'Operate Time',
-            dataIndex: 'OperateTime',
-            key: 'OperateTime',
-            render: (text) => <a style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>{new Date(text * 1000).toLocaleDateString("en-US")} - {new Date(text * 1000).toLocaleTimeString("it-IT")}</a>,
-        }
+            title: 'Explain Time',
+            dataIndex: 'ExplainTime_t',
+            key: 'ExplainTime_t',
+            render: (text) => <div>{text}s</div>
+        },
+        {
+            align: "center",
+            title: 'Record Time',
+            dataIndex: 'UpdatedAt',
+            key: 'UpdatedAt'
+        },
+        // {
+        //     align: "center",
+        //     title: 'Operate Time',
+        //     dataIndex: 'OperateTime',
+        //     key: 'OperateTime',
+        //     render: (text) => <a style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>{new Date(text * 1000).toLocaleDateString("en-US")} - {new Date(text * 1000).toLocaleTimeString("it-IT")}</a>,
+        // }
     ]
     return (
         <>

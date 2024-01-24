@@ -3,14 +3,42 @@ const { Header, Content, Footer } = Layout;
 import { CommentOutlined, CustomerServiceOutlined, RobotOutlined } from '@ant-design/icons';
 import { Logout as LogoutApi } from '../services/user'
 import { useNavigate } from "react-router-dom";
+import { setToken } from '../services/tools';
+import { UpdateOptTime as UpdateTimeApi } from "../services/user";
+import { VISIT_TYPE } from "../services/user";
 const { Text } = Typography;
+import { useEffect, useState } from "react";
 const MyLayout = ({ children }) => {
+
     const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState({});
+    useEffect(() => {
+        const storedUser = localStorage.getItem("userInfo");
+        setUserInfo(JSON.parse(storedUser))
+    }, []);
 
     const userLogoutFcn = async () => {
+
+
+        try {
+            let time_res = await UpdateTimeApi({
+                user_id: userInfo.subject_id,
+                user_name: userInfo.subject_name,
+                serial_uuid: userInfo.serial_uuid,
+                visit_type: VISIT_TYPE,
+                time_type: 2,
+            });
+            if (time_res.code != 0) {
+                console.log('update time error...', time_res)
+            }
+        } catch (error) {
+            console.log('update time error...', error)
+        }
+
         let res = await LogoutApi();
         console.log(res);
         localStorage.removeItem('userInfo');
+        setToken('');
         navigate('/');
     }
 

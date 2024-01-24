@@ -1,8 +1,10 @@
 import { Row, Col, Card, Form, Input, Button } from "antd";
 import { message } from 'antd';
 import { useNavigate } from "react-router-dom";
-import { Register as RegisterApi } from "../services/user";
+import { Register as RegisterApi, UpdateOptTime as UpdateTimeApi } from "../services/user";
 import { Login as LoginApi } from "../services/user";
+import { setToken } from "../services/tools";
+import { VISIT_TYPE } from "../services/user";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -36,10 +38,29 @@ const Register = () => {
                   message.error(res2.msg);
                   return;
                 }
+                setToken(res2.data.token);
+
+                //
+                let time_res = await UpdateTimeApi({
+                  user_id: res2.data.id,
+                  user_name: res2.data.user_name,
+                  serial_uuid: res2.data.token,// 用token作为serial  
+                  visit_type: VISIT_TYPE,
+                  time_type: 1
+                })
+                if (time_res.code != 0) {
+                  // message.error(time_res.msg + " operate time won't be recorded...");
+                  console.log("operate time won't be recorded...", time_res.msg)
+                }
+
                 localStorage.setItem('userInfo', JSON.stringify({
                   subject_id: res2.data.id,
-                  subject_name: res2.data.user_name
+                  subject_name: res2.data.user_name,
+                  // serial_uuid: time_res?.data?.SerialUUID || "none"
+                  serial_uuid: res2.data.token || "none" // 用token作为serial  
                 }));
+
+
                 navigate('/home');
 
 

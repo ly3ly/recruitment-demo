@@ -5,6 +5,7 @@ import { DataProvider } from './components/DataContext';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import SubjectList from "./components/SubjectList";
 import Login from "./components/Login"
+import RecommendPage from "./components/RecommendPage";
 
 
 function App() {
@@ -13,8 +14,9 @@ function App() {
     <DataProvider>
       <MyLayout>
         <Routes >
-          <Route path="/" element={<TalentList />} />
-          <Route path="/detail-page" element={<DetailPage />} />
+          {/* <Route path="/" element={<TalentList />} /> */}
+          <Route path="/" element={<RecommendPage />} />
+          {/* <Route path="/detail-page" element={<DetailPage />} /> */}
           <Route path="/subjects" element={<SubjectList />} />
         </Routes>
       </MyLayout>
