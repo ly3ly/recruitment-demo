@@ -22,7 +22,7 @@ import { getToken, wsUrl } from "../services/tools";
 
 const CandidateCard = ({ candidate_name, match_rate, sid1, sid2, desp2 }) => {
   return (
-    <Col style={{ width: "350px" }}>
+    <Col style={{ width: "290px" }}>
       <AvatarItem candidate_name={candidate_name} match_rate={match_rate} />
       <ScoreCard
         selectID={sid1}
@@ -335,7 +335,26 @@ const RecommendPage = () => {
         }}
         style={{ maxHeight: "80vh", overflow: "scroll" }}
       >
-        <Title level={3}>Input Explanation:</Title>
+        {VISIT_TYPE == 1 || VISIT_TYPE == 2 ? <div> <Title level={3}>Input Explanation:</Title>
+          <p style={{ textAlign: "justify" }}>
+            This AI hiring system employs a range of input, from CV screening to
+            interactive evaluations such as game-based assessment and video
+            interview assessment. By analyzing this information, the AI system
+            aims to compare the qualities of successful employees with those of
+            job candidates to determine the candidates' potential level.
+          </p>
+          <p style={{ textAlign: "justify" }}>
+            Overall, the AI hiring system is capable of forming a comprehensive
+            profile for each candidate by leveraging diverse data sources,
+            including CV details, game-based assessment, and video interview
+            assessment. By capturing the essence of what makes current employees
+            successful and matching those traits with the profiles of candidates,
+            the AI system offers a predictive insight into the future performance
+            of candidates. This helps identify suitable candidates who align with
+            organizational requirements and exhibit desired traits.
+          </p></div> : null}
+
+        {/* <Title level={3}>Input Explanation:</Title>
         <p style={{ textAlign: "justify" }}>
           This AI hiring system employs a range of input, from CV screening to
           interactive evaluations such as game-based assessment and video
@@ -352,51 +371,55 @@ const RecommendPage = () => {
           the AI system offers a predictive insight into the future performance
           of candidates. This helps identify suitable candidates who align with
           organizational requirements and exhibit desired traits.
-        </p>
+        </p> */}
 
-        <Title level={3}>Process Explanation:</Title>
-        <p style={{ textAlign: "justify" }}>
-          The AI recruitment system can simulate human cognitive functions to
-          sift through vast numbers of candidates and pinpoint those most likely
-          to excel in a given role by utilizing machine learning (ML) which is a
-          subset of AI. Machine learning techniques, such as Natural Language
-          Processing (NLP) and predictive analytics, are integral to this
-          approach, enabling a nuanced analysis of a candidate's potential based
-          on a variety of complex datasets.
-        </p>
-        <p style={{ textAlign: "justify" }}>
-          Overall, the AI hiring system uses machine learning to automate the
-          hiring process. It parses and interprets vast amounts of data—from the
-          syntactic structure of CV content to the strategic decision-making
-          captured in game-based assessments and the nuanced behaviors exhibited
-          in a video interview—providing a holistic assessment of each
-          candidate.
-        </p>
+        {VISIT_TYPE == 1 || VISIT_TYPE == 3 ? <div><Title level={3}>Process Explanation:</Title>
+          <p style={{ textAlign: "justify" }}>
+            The AI recruitment system can simulate human cognitive functions to
+            sift through vast numbers of candidates and pinpoint those most likely
+            to excel in a given role by utilizing machine learning (ML) which is a
+            subset of AI. Machine learning techniques, such as Natural Language
+            Processing (NLP) and predictive analytics, are integral to this
+            approach, enabling a nuanced analysis of a candidate's potential based
+            on a variety of complex datasets.
+          </p>
+          <p style={{ textAlign: "justify" }}>
+            Overall, the AI hiring system uses machine learning to automate the
+            hiring process. It parses and interprets vast amounts of data—from the
+            syntactic structure of CV content to the strategic decision-making
+            captured in game-based assessments and the nuanced behaviors exhibited
+            in a video interview—providing a holistic assessment of each
+            candidate.
+          </p></div> : null}
 
-        <Title level={3}>Output Explanation:</Title>
-        <p style={{ textAlign: "justify" }}>
-          Through the AI hiring system's comprehensive evaluation, four
-          candidates A, B, C, and D were assessed via CV screening, game-based
-          assessment, and video interview assessment. Candidates C and D both
-          impressed with their CV scores at 96%, although A and B was not far
-          behind with above 90% score. In the game-based assessments, candidates
-          A and D stood out with top scores of 98%. In the video interviews, all
-          candidates showed strong performance with all scores above 90%, with D
-          excelling at 98%. Candidate D's overall match score, a robust 97%
-          average from CV screening, game-based assessment, and video interview,
-          highlighted D’s exceptional fit for the Sales Representative role.
-        </p>
-        <p style={{ textAlign: "justify" }}>
-          In conclusion, the AI system illuminates Candidate D as the primary
-          selection for the sales representative role. Surpassing the rest with
-          an extensive skill set and superior performance in all assessments,
-          Candidate D is marked as the leading choice. With an exemplary CV,
-          superior cognitive abilities from game-based assessment and
-          outstanding communication skills in video interview assessment,
-          Candidate D surpasses the multifaceted demands of the role. Alongside
-          a strong cultural fit, Candidate D is well-equipped to make meaningful
-          contributions to the organization.
-        </p>
+
+        {VISIT_TYPE == 1 || VISIT_TYPE == 4 ? <div>
+          <Title level={3}>Output Explanation:</Title>
+          <p style={{ textAlign: "justify" }}>
+            Through the AI hiring system's comprehensive evaluation, four
+            candidates A, B, C, and D were assessed via CV screening, game-based
+            assessment, and video interview assessment. Candidates C and D both
+            impressed with their CV scores at 96%, although A and B was not far
+            behind with above 90% score. In the game-based assessments, candidates
+            A and D stood out with top scores of 98%. In the video interviews, all
+            candidates showed strong performance with all scores above 90%, with D
+            excelling at 98%. Candidate D's overall match score, a robust 97%
+            average from CV screening, game-based assessment, and video interview,
+            highlighted D’s exceptional fit for the Sales Representative role.
+          </p>
+          <p style={{ textAlign: "justify" }}>
+            In conclusion, the AI system illuminates Candidate D as the primary
+            selection for the sales representative role. Surpassing the rest with
+            an extensive skill set and superior performance in all assessments,
+            Candidate D is marked as the leading choice. With an exemplary CV,
+            superior cognitive abilities from game-based assessment and
+            outstanding communication skills in video interview assessment,
+            Candidate D surpasses the multifaceted demands of the role. Alongside
+            a strong cultural fit, Candidate D is well-equipped to make meaningful
+            contributions to the organization.
+          </p>
+        </div> : null}
+
       </Modal>
 
       <div style={{ margin: "20px" }}>
@@ -478,7 +501,7 @@ const RecommendPage = () => {
           <Col>
             <h2>AI's Recommendation</h2>
           </Col>
-          <Col span={10} offset={4}>
+          {VISIT_TYPE == 5 ? null : <Col span={10} offset={4}>
             <Card>
               <div
                 style={{
@@ -490,6 +513,8 @@ const RecommendPage = () => {
                   gap: "20px",
                 }}
               >
+
+
                 <Row style={{ alignItems: "center", gap: "20px" }}>
                   <img src={explainIMG} width={100}></img>
                   <Button
@@ -525,7 +550,8 @@ const RecommendPage = () => {
                 </Text>
               </div>
             </Card>
-          </Col>
+          </Col>}
+
         </Row>
         <div
           style={{
@@ -654,9 +680,9 @@ const RecommendPage = () => {
             list={[5, 5, 4, 5]}
             cols={[
               "Novice",
-              <Row style={{ marginTop: "15px" }}>Developing</Row>,
+              <Row key="Developing" style={{ marginTop: "15px" }}>Developing</Row>,
               "Intermediate",
-              <Row style={{ marginTop: "15px" }}>Advanced</Row>,
+              <Row key="Advanced" style={{ marginTop: "15px" }}>Advanced</Row>,
               "Expert",
             ]}
           />

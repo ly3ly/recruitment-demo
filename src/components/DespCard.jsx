@@ -18,14 +18,14 @@ const DespCard = ({ h1title, h1desp, list, cols }) => {
       <Row
         style={{
           marginTop: "10px",
-          marginBottom:'30px',
+          marginBottom: '30px',
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
         }}
       >
         {list.map((item, idx) => (
-          <Col key={idx}  style={{ width: "310px" }}>
+          <Col key={idx} style={{ width: "290px" }}>
             <ScoreCard selectID={item} cols={cols}></ScoreCard>
           </Col>
         ))}

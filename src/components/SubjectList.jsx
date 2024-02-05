@@ -31,8 +31,11 @@ const SubjectList = () => {
                 message.error(res.msg);
                 return;
             }
+            const listData = res.data.map(item => {
+                return { ...item, key: item.ID };
+            })
 
-            setSubjectList(res.data);
+            setSubjectList(listData);
 
         } catch (error) {
             setLoading(false);
@@ -48,6 +51,7 @@ const SubjectList = () => {
             dataIndex: 'ID',
             key: 'ID',
             width: '150px',
+            sorter: (a, b) => a.ID - b.ID,
             render: (text) => <a>{text}</a>,
         },
         {
@@ -70,6 +74,30 @@ const SubjectList = () => {
             title: 'Explanation Type',
             dataIndex: 'VisitType',
             key: 'VisitType',
+            filters: [
+                {
+                    text: 'input-process-output',
+                    value: 1,
+                },
+                {
+                    text: 'input',
+                    value: 2,
+                },
+                {
+                    text: 'process',
+                    value: 3,
+                },
+                {
+                    text: 'output',
+                    value: 4,
+                },
+                {
+                    text: 'none',
+                    value: 5,
+                },
+            ],
+            onFilter: (value, record) => record.VisitType == value,
+            sorter: (a, b) => a.VisitType - b.VisitType,
             render: (text) => <div>{text == 1 ? 'input-process-output' : text == 2 ? 'input' : text == 3 ? 'process' : text == 4 ? 'output' : text == 5 ? 'none' : 'undefined'}</div>,
         },
         {
@@ -77,6 +105,7 @@ const SubjectList = () => {
             title: 'Visit Time',
             dataIndex: 'VisitTime_t',
             key: 'VisitTime_t',
+            sorter: (a, b) => a.VisitTime_t - b.VisitTime_t,
             render: (text) => <div>{text}s</div>
         },
         {
@@ -84,13 +113,15 @@ const SubjectList = () => {
             title: 'Explain Time',
             dataIndex: 'ExplainTime_t',
             key: 'ExplainTime_t',
+            sorter: (a, b) => a.ExplainTime_t - b.ExplainTime_t,
             render: (text) => <div>{text}s</div>
         },
         {
             align: "center",
             title: 'Record Time',
             dataIndex: 'UpdatedAt',
-            key: 'UpdatedAt'
+            key: 'UpdatedAt',
+            sorter: (a, b) => new Date(a.UpdatedAt) - new Date(b.UpdatedAt),
         },
         // {
         //     align: "center",

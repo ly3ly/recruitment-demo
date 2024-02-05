@@ -6,8 +6,8 @@
 // export const serverUrl = "http://43.156.54.192";
 // const serverIP = "127.0.0.1";
 const serverIP = "43.156.54.192";
-export const serverUrl = `http://${serverIP}:3000`;
-export const wsUrl = `ws://${serverIP}:6000/echo`;
+export const serverUrl = `http://${serverIP}`;
+export const wsUrl = `ws://${serverIP}/echo`;
 
 /**
  * 设置token
