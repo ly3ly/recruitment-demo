@@ -621,19 +621,6 @@ const RecommendPage = () => {
   </Text>
 </Row>
 
-
-
-          <Row>
-            <Text strong>
-              Thus, the recommendation is that your company should offer the job
-              to{" "}
-              <Text strong underline>
-              Candidate D
-              </Text>
-              .
-            </Text>
-          </Row>
-
           <h3>Overall Performance</h3>
           <Row style={{ justifyContent: "space-around", marginBottom: "20px" }}>
             {talentList.map((item, idx) => (
