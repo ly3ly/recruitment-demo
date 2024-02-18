@@ -63,10 +63,9 @@ const PromoteCard = () => {
                         <p>AI-empowered intelligent talent recommendation system.</p>
                         <p>Make employment more convenient and smart.</p>
                     </Typography.Title>
-                    <Button type="primary" style={{ marginBottom: 16 }}>
-                        {/* <Button type="primary" href="https://ant.design" target="_blank"> */}
+                    {/* <Button type="primary" style={{ marginBottom: 16 }}>
                         Get Start
-                    </Button>
+                    </Button> */}
                 </Flex>
             </Flex>
         </Card>

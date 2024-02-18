@@ -35,8 +35,8 @@ const MyLayout = ({ children }) => {
             console.log('update time error...', error)
         }
 
-        let res = await LogoutApi();
-        console.log(res);
+        // let res = await LogoutApi();
+        // console.log(res);
         localStorage.removeItem('userInfo');
         setToken('');
         navigate('/');

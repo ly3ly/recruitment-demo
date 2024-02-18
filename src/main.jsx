@@ -4,6 +4,7 @@ import enUS from 'antd/locale/en_US'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import './index.css'
 import Login from './components/Login.jsx'
+import AuthPage from './components/Auth.jsx'
 import Register from './components/Register.jsx'
 import App from './App.jsx'
 import RecommendPage from './components/RecommendPage.jsx'
@@ -22,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ConfigProvider locale={enUS}>
       <Routes>
         {/* <Route path="*"   element={<RecommendPage />}/>  */}
-        <Route path="*" element={<Login />} />
+        <Route path="*" element={<AuthPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home/*" element={<App />} />
       </Routes>

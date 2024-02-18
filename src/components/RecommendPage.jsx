@@ -19,10 +19,11 @@ import explainIMG from "../assets/explain.svg";
 import { UpdateOptTime as UpdateTimeApi } from "../services/user";
 import { VISIT_TYPE } from "../services/user";
 import { getToken, wsUrl } from "../services/tools";
+import PromoteCard from './PromoteCard'
 
 const CandidateCard = ({ candidate_name, match_rate, sid1, sid2, desp2 }) => {
   return (
-    <Col style={{ width: "290px" }}>
+    <Col style={{ width: "500px" }}>
       <AvatarItem candidate_name={candidate_name} match_rate={match_rate} />
       <ScoreCard
         selectID={sid1}
@@ -33,13 +34,16 @@ const CandidateCard = ({ candidate_name, match_rate, sid1, sid2, desp2 }) => {
       <p style={{ marginTop: 0, marginBottom: "10px" }}>
         <Text strong>Higher Tier</Text>
       </p>
+      <Text>Overall:</Text>{" "}
+      <Text strong>{desp2}</Text>
 
-      <ScoreCard
+      {/* <ScoreCard
         selectID={sid2}
-        cols={["0-33%", "34-67%", "68-100%"]}
+        // cols={["0-33%", "34-67%", "68-100%"]}
+        cols={["Not Recommend","Recommend","Highly Recommend"]}
         desp={desp2}
         title="Overall Recommendation"
-      />
+      /> */}
     </Col>
   );
 };
@@ -50,10 +54,10 @@ const talentList = [
     match_rate: "93",
     sid1: 3,
     sid2: 2,
-    desp2: "Maybe",
+    desp2: "Not Recommend",
     cv: {
       title: "CV Score",
-      desp: "92%",
+      desp: "91%",
       selectID: 5,
       cols: ["0-20", "21-40", "41-60", "61-80", "81-100"],
     },
@@ -85,10 +89,10 @@ const talentList = [
     match_rate: "94",
     sid1: 3,
     sid2: 2,
-    desp2: "Maybe",
+    desp2: "Not Recommend",
     cv: {
       title: "CV Score",
-      desp: "96%",
+      desp: "92%",
       selectID: 5,
       cols: ["0-20", "21-40", "41-60", "61-80", "81-100"],
     },
@@ -119,7 +123,7 @@ const talentList = [
     match_rate: "95",
     sid1: 3,
     sid2: 2,
-    desp2: "Maybe",
+    desp2: "Recommend",
     cv: {
       title: "CV Score",
       desp: "96%",
@@ -154,7 +158,7 @@ const talentList = [
     match_rate: "97",
     sid1: 3,
     sid2: 3,
-    desp2: "Yes",
+    desp2: "Highly Recommend",
     cv: {
       title: "CV Score",
       desp: "96%",
@@ -307,6 +311,16 @@ const RecommendPage = () => {
 
   return (
     <>
+     {/* <Modal title="Basic Modal" 
+     width="80%"
+     footer={null}
+        maskClosable={false}
+     open>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal> */}
+
       <Modal
         width="80%"
         open={showExplain}
@@ -333,9 +347,9 @@ const RecommendPage = () => {
           setShowExplain(false);
 
         }}
-        style={{ maxHeight: "80vh", overflow: "scroll" }}
+        // style={{ maxHeight: "80vh", overflow: "scroll" }}
       >
-        {VISIT_TYPE == 1 || VISIT_TYPE == 2 ? <div> <Title level={3}>Input Explanation:</Title>
+        {VISIT_TYPE == 1 || VISIT_TYPE == 2 ? <div> {VISIT_TYPE==1?<Title level={3}>Input Explanation:</Title>:null}
           <p style={{ textAlign: "justify" }}>
             This AI hiring system employs a range of input, from CV screening to
             interactive evaluations such as game-based assessment and video
@@ -373,7 +387,10 @@ const RecommendPage = () => {
           organizational requirements and exhibit desired traits.
         </p> */}
 
-        {VISIT_TYPE == 1 || VISIT_TYPE == 3 ? <div><Title level={3}>Process Explanation:</Title>
+        {VISIT_TYPE == 1 || VISIT_TYPE == 3 ? <div>
+
+        {VISIT_TYPE==1?<Title level={3}>Process Explanation:</Title>:null}
+
           <p style={{ textAlign: "justify" }}>
             The AI recruitment system can simulate human cognitive functions to
             sift through vast numbers of candidates and pinpoint those most likely
@@ -394,7 +411,7 @@ const RecommendPage = () => {
 
 
         {VISIT_TYPE == 1 || VISIT_TYPE == 4 ? <div>
-          <Title level={3}>Output Explanation:</Title>
+          {VISIT_TYPE==1?<Title level={3}>Output Explanation:</Title>:null}
           <p style={{ textAlign: "justify" }}>
             Through the AI hiring system's comprehensive evaluation, four
             candidates A, B, C, and D were assessed via CV screening, game-based
@@ -423,6 +440,8 @@ const RecommendPage = () => {
       </Modal>
 
       <div style={{ margin: "20px" }}>
+        <PromoteCard></PromoteCard>
+        <Divider></Divider>
         <div style={{ margin: "auto", width: "60%" }}>
           <Table
             pagination={false}
@@ -519,6 +538,10 @@ const RecommendPage = () => {
                   <img src={explainIMG} width={100}></img>
                   <Button
                     type="primary"
+                    size="large"
+                    style={{fontSize:'28px',padding:'30px 24px', display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'}}
                     onClick={async () => {
                       setShowExplain(true);
                       try {
@@ -542,17 +565,29 @@ const RecommendPage = () => {
                 </Row>
                 <Text strong>
                   {" "}
-                  To give you a better understanding of{" "}
+                  To give you a better understanding of AI's recommendation, please click the {" "}“
                   <Text style={{ color: "red" }}>
-                    how AI arrived at this recommendation,
-                  </Text>{" "}
-                  please click the "Explanation" button.
+                  Explanation
+                  </Text>”{" "}
+                  button.
                 </Text>
               </div>
             </Card>
           </Col>}
 
         </Row>
+
+ <div
+ style={{
+  borderRadius: "20px",
+  padding: "5px 20px",
+  margin: "10px 40px",
+  marginBottom:"30px"
+}}
+ >
+
+ </div>
+
         <div
           style={{
             border: "1px solid black",
@@ -561,24 +596,39 @@ const RecommendPage = () => {
             margin: "10px 40px",
           }}
         >
-          <h3>Report summary:</h3>
 
-          <Row>
-            <Text>
-              Based on the AI system's analysis,{" "}
-              <Text strong underline>
-                Candidate D
-              </Text>{" "}
-              will perform well in the further after joining the company,
-              compared to Candidate A, B and C.
-            </Text>
-          </Row>
+<h3>Report summary:</h3>
+
+<Row>
+  <Text>
+    According to the AI hiring system's analysis,{" "}
+    <Text strong underline>
+      Candidate D
+    </Text>{" "}
+    will perform well in the further for the Sales Representative Position after joining the company,
+    compared to Candidate A, B and C. Therefore, it is recommended that your company should offer the job to{" "}
+    <Text strong underline>
+      Candidate D
+    </Text>.
+  </Text>
+</Row>
+
+<Row>
+  <Text >
+    <Text strong underline>
+    The overall performance
+    </Text> {" "} of four candidates evaluated by AI is as bellows. 
+  </Text>
+</Row>
+
+
+
           <Row>
             <Text strong>
               Thus, the recommendation is that your company should offer the job
               to{" "}
               <Text strong underline>
-                D
+              Candidate D
               </Text>
               .
             </Text>
@@ -607,13 +657,15 @@ const RecommendPage = () => {
             margin: "20px 40px",
           }}
         >
-          <Text strong>
+          <div >
+          <Text strong style={{fontSize:'20px'}}>
             {" "}
             The following is the{" "}
-            <Text style={{ color: "red" }}>individual detailed score</Text> for
+            <Text style={{ color: "red",fontSize:'20px' }}>individual detailed score</Text> for
             the CV, game-based assessment, and video interview assessment, all
             of which contribute to the overall score provided by AI.
           </Text>
+          </div>
         </div>
 
         <Divider></Divider>
@@ -680,33 +732,33 @@ const RecommendPage = () => {
             list={[5, 5, 4, 5]}
             cols={[
               "Novice",
-              <Row key="Developing" style={{ marginTop: "15px" }}>Developing</Row>,
+              <Row key="Developing" style={{ marginTop: "15px" }}></Row>,
               "Intermediate",
-              <Row key="Advanced" style={{ marginTop: "15px" }}>Advanced</Row>,
+              <Row key="Advanced" style={{ marginTop: "15px" }}></Row>,
               "Expert",
             ]}
           />
           <DespCard
             h1title="Job-related Traits"
             h1desp="Remains controls in the face of pressure, complaints or failure and has the ability to think rational despite pressure. Can cope well with irritable customers or co-workers."
-            list={[4, 4, 5, 5]}
+            list={[4, 4, 4, 4]}
             cols={[
               "Novice",
-              <Row style={{ marginTop: "15px" }}>Developing</Row>,
+              <Row style={{ marginTop: "15px" }}></Row>,
               "Intermediate",
-              <Row style={{ marginTop: "15px" }}>Advanced</Row>,
+              <Row style={{ marginTop: "15px" }}></Row>,
               "Expert",
             ]}
           />
           <DespCard
             h1title="Perceptual and Processing Speed"
             h1desp="Recognizes the importance of swift and accurate understanding, analysis, and response to information."
-            list={[5, 4, 4, 5]}
+            list={[5, 4, 5, 5]}
             cols={[
               "Novice",
-              <Row style={{ marginTop: "15px" }}>Developing</Row>,
+              <Row style={{ marginTop: "15px" }}></Row>,
               "Intermediate",
-              <Row style={{ marginTop: "15px" }}>Advanced</Row>,
+              <Row style={{ marginTop: "15px" }}></Row>,
               "Expert",
             ]}
           />
@@ -731,9 +783,9 @@ const RecommendPage = () => {
             list={[4, 5, 4, 5]}
             cols={[
               "Novice",
-              <Row style={{ marginTop: "15px" }}>Developing</Row>,
+              <Row style={{ marginTop: "15px" }}></Row>,
               "Intermediate",
-              <Row style={{ marginTop: "15px" }}>Advanced</Row>,
+              <Row style={{ marginTop: "15px" }}></Row>,
               "Expert",
             ]}
           />
@@ -743,9 +795,9 @@ const RecommendPage = () => {
             list={[4, 4, 4, 4]}
             cols={[
               "Novice",
-              <Row style={{ marginTop: "15px" }}>Developing</Row>,
+              <Row style={{ marginTop: "15px" }}></Row>,
               "Intermediate",
-              <Row style={{ marginTop: "15px" }}>Advanced</Row>,
+              <Row style={{ marginTop: "15px" }}></Row>,
               "Expert",
             ]}
           />
@@ -754,11 +806,11 @@ const RecommendPage = () => {
             h1desp="Exhibits a clear understanding and inherent alignment with the company's values and work culture, suggesting a potential seamless integration into the organizaitonal environment."
             list={[4, 4, 5, 5]}
             cols={[
-              "Novice",
-              <Row style={{ marginTop: "15px" }}>Developing</Row>,
-              "Intermediate",
-              <Row style={{ marginTop: "15px" }}>Advanced</Row>,
-              "Expert",
+              "No Alignment",
+              <Row style={{ marginTop: "15px" }}></Row>,
+              "Moderate",
+              <Row style={{ marginTop: "15px" }}></Row>,
+              "Excellent",
             ]}
           />
         </div>
