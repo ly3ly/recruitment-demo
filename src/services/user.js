@@ -27,4 +27,6 @@ export const UpdateOptTime = (data) => put(serverUrl + "/api/v1/user/records", d
 
 export const GetRecordList = () => get(serverUrl + "/api/v1/admin/user/records");
 
-export const VISIT_TYPE = 4;
+export const UpdateUserInActive = (data) => post(serverUrl + "/api/v1/user/inactive", data);
+
+export const VISIT_TYPE = 8;

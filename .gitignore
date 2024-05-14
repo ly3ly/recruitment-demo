@@ -8,6 +8,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+src/services/user.js-e
 node_modules
 dist
 dist-ssr

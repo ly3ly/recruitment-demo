@@ -16,7 +16,7 @@ import AvatarItem from "./AvatarItem";
 import DespCard from "./DespCard";
 import { Col, Row, Card } from "antd";
 import explainIMG from "../assets/explain.svg";
-import { UpdateOptTime as UpdateTimeApi } from "../services/user";
+import { UpdateOptTime as UpdateTimeApi, UpdateUserInActive as UpdateUserInActiveApi } from "../services/user";
 import { VISIT_TYPE } from "../services/user";
 import { getToken, wsUrl } from "../services/tools";
 import PromoteCard from './PromoteCard'
@@ -223,6 +223,7 @@ const JobColumns = [
 const RecommendPage = () => {
   const [showExplain, setShowExplain] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+
   useEffect(() => {
     const storedUser = localStorage.getItem("userInfo");
     setUserInfo(JSON.parse(storedUser))
@@ -250,76 +251,62 @@ const RecommendPage = () => {
 
   }, []);
 
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
 
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, []);
+
+  const reportInactivity = async () => {
+    const inactive = 60
+    // console.log('showExplain', showExplain)
+    console.log(userInfo.serial_uuid)
+    let res = await UpdateUserInActiveApi({
+      time: inactive,
+      serial_uuid: userInfo.serial_uuid,
+      type: showExplain == true ? 2 : 1,
+    })
+    if (res.code != 0) {
+      console.log(res.msg)
+    }
+  };
+
+  let intervalId; // 用于存储 setInterval 返回的 ID
+
+  function triggerEvent() {
+    // console.log("report"); // 在这里替换为你想要的触发操作
+
+    reportInactivity()
+
+    // 重置定时器
+    resetTrigger();
+  }
+
+  function resetTrigger() {
+    clearInterval(intervalId); // 清除之前的定时器
+    // 创建新的定时器
+    intervalId = setInterval(triggerEvent, 60 * 1000);
+  }
+
+  function handleActivity() {
+    resetTrigger();
+  }
 
 
   useEffect(() => {
+    // 初始启动定时器
+    resetTrigger();
 
+    // 绑定页面活动事件监听器
+    window.addEventListener('mousemove', handleActivity);
+    window.addEventListener('keydown', handleActivity);
+
+    return () => {
+      // 在组件卸载时解绑事件监听器和清除定时器
+      window.removeEventListener('mousemove', handleActivity);
+      window.removeEventListener('keydown', handleActivity);
+      clearInterval(intervalId);
+    };
   }, []);
-
-  const handleBeforeUnload = (event) => {
-    event.preventDefault();
-    event.returnValue = "";
-    const storedUser = localStorage.getItem("userInfo");
-    setUserInfo(JSON.parse(storedUser))
-    console.log("userInfo", userInfo);
-    try {
-      UpdateTimeApi({
-        user_id: userInfo.subject_id,
-        user_name: userInfo.subject_name,
-        serial_uuid: userInfo.serial_uuid,
-        visit_type: VISIT_TYPE,
-        time_type: 2,
-      })
-        .then((time_res) => {
-          if (time_res.code !== 0) {
-            console.log('update time1 error...', time_res);
-          }
-
-          if (showExplain) {
-            UpdateTimeApi({
-              user_id: userInfo.subject_id,
-              user_name: userInfo.subject_name,
-              serial_uuid: userInfo.serial_uuid,
-              visit_type: VISIT_TYPE,
-              time_type: 4,
-            })
-              .then((time_res2) => {
-                if (time_res2.code !== 0) {
-                  console.log('update time2 error...', time_res2);
-                }
-              })
-              .catch((error) => {
-                console.log('update time2 error...', error);
-              });
-          }
-        })
-        .catch((error) => {
-          console.log('update time1 error...', error);
-        });
-    } catch (error) {
-      console.log('update time error...', error);
-    }
-
-  }
 
   return (
     <>
-     {/* <Modal title="Basic Modal" 
-     width="80%"
-     footer={null}
-        maskClosable={false}
-     open>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal> */}
 
       <Modal
         width="80%"
@@ -347,71 +334,30 @@ const RecommendPage = () => {
           setShowExplain(false);
 
         }}
-        // style={{ maxHeight: "80vh", overflow: "scroll" }}
+      // style={{ maxHeight: "80vh", overflow: "scroll" }}
       >
-        {VISIT_TYPE == 1 || VISIT_TYPE == 2 ? <div> {VISIT_TYPE==1?<Title level={3}>Input Explanation:</Title>:null}
+        {VISIT_TYPE == 1 || VISIT_TYPE == 2 || VISIT_TYPE == 6 || VISIT_TYPE == 7? <div> {VISIT_TYPE == 1 || VISIT_TYPE == 6 || VISIT_TYPE == 7? <Title level={3}>Input Explanation:</Title> : null}
           <p style={{ textAlign: "justify" }}>
-            This AI hiring system employs a range of input, from CV screening to
-            interactive evaluations such as game-based assessment and video
-            interview assessment. By analyzing this information, the AI system
-            aims to compare the qualities of successful employees with those of
-            job candidates to determine the candidates' potential level.
+            This AI hiring system employs a range of input data from CV screening to interactive evaluations including game-based assessment and video interview assessment. In CV screening, AI will utilize the working experience, skills and qualifications from both candidates and successful employees. In game-based assessment, the candidates' reactions in game such as time taken and decision made will be recorded. In video interview assessment, candidates’ verbal, paraverbal, and nonverbal behaviors will be extracted.
           </p>
           <p style={{ textAlign: "justify" }}>
-            Overall, the AI hiring system is capable of forming a comprehensive
-            profile for each candidate by leveraging diverse data sources,
-            including CV details, game-based assessment, and video interview
-            assessment. By capturing the essence of what makes current employees
-            successful and matching those traits with the profiles of candidates,
-            the AI system offers a predictive insight into the future performance
-            of candidates. This helps identify suitable candidates who align with
-            organizational requirements and exhibit desired traits.
+            Overall, the AI hiring system forms a comprehensive dataset from diverse sources, including candidates’ CVs and profiles of successful employees, as well as game-based assessments and video interview evaluations, to identify candidates who meet organizational requirements and exhibit desired traits.
           </p></div> : null}
 
-        {/* <Title level={3}>Input Explanation:</Title>
-        <p style={{ textAlign: "justify" }}>
-          This AI hiring system employs a range of input, from CV screening to
-          interactive evaluations such as game-based assessment and video
-          interview assessment. By analyzing this information, the AI system
-          aims to compare the qualities of successful employees with those of
-          job candidates to determine the candidates' potential level.
-        </p>
-        <p style={{ textAlign: "justify" }}>
-          Overall, the AI hiring system is capable of forming a comprehensive
-          profile for each candidate by leveraging diverse data sources,
-          including CV details, game-based assessment, and video interview
-          assessment. By capturing the essence of what makes current employees
-          successful and matching those traits with the profiles of candidates,
-          the AI system offers a predictive insight into the future performance
-          of candidates. This helps identify suitable candidates who align with
-          organizational requirements and exhibit desired traits.
-        </p> */}
+        {VISIT_TYPE == 1 || VISIT_TYPE == 3 || VISIT_TYPE == 6 || VISIT_TYPE == 8? <div>
 
-        {VISIT_TYPE == 1 || VISIT_TYPE == 3 ? <div>
-
-        {VISIT_TYPE==1?<Title level={3}>Process Explanation:</Title>:null}
+          {VISIT_TYPE == 1 || VISIT_TYPE == 6 || VISIT_TYPE == 8? <Title level={3}>Process Explanation:</Title> : null}
 
           <p style={{ textAlign: "justify" }}>
-            The AI recruitment system can simulate human cognitive functions to
-            sift through vast numbers of candidates and pinpoint those most likely
-            to excel in a given role by utilizing machine learning (ML) which is a
-            subset of AI. Machine learning techniques, such as Natural Language
-            Processing (NLP) and predictive analytics, are integral to this
-            approach, enabling a nuanced analysis of a candidate's potential based
-            on a variety of complex datasets.
+            The AI hiring system employs machine learning (ML) algorithms and natural language processing (NLP) to analyze input data from CVs, game-based assessments, and video interviews. During CV screening, ML and NLP are used to extract relevant information by deconstructing words and phrases according to predefined grammatical rules. The AI then compares this information against profiles of successful employees to assign scores. In game-based assessments, it identifies behavioral patterns to evaluate cognitive abilities.  Finally, in video interviews, the system assesses candidates' responses, measuring their alignment with the company's target profile to determine their suitability for the job and the organization.
           </p>
           <p style={{ textAlign: "justify" }}>
-            Overall, the AI hiring system uses machine learning to automate the
-            hiring process. It parses and interprets vast amounts of data—from the
-            syntactic structure of CV content to the strategic decision-making
-            captured in game-based assessments and the nuanced behaviors exhibited
-            in a video interview—providing a holistic assessment of each
-            candidate.
+            Overall, the AI hiring system uses ML and NLP to automate the hiring process. It parses and analyzes vast amounts of input data from CV, game-based assessment and video interview. Such algorithms enable a nuanced analysis of a candidate's potential based on a variety of complex datasets.
           </p></div> : null}
 
 
-        {VISIT_TYPE == 1 || VISIT_TYPE == 4 ? <div>
-          {VISIT_TYPE==1?<Title level={3}>Output Explanation:</Title>:null}
+        {VISIT_TYPE == 1 || VISIT_TYPE == 4 || VISIT_TYPE == 7|| VISIT_TYPE == 8? <div>
+          {VISIT_TYPE == 1 || VISIT_TYPE == 7|| VISIT_TYPE == 8? <Title level={3}>Output Explanation:</Title> : null}
           <p style={{ textAlign: "justify" }}>
             Through the AI hiring system's comprehensive evaluation, four
             candidates A, B, C, and D were assessed via CV screening, game-based
@@ -521,7 +467,7 @@ const RecommendPage = () => {
             <h2>AI's Recommendation</h2>
           </Col>
           {VISIT_TYPE == 5 ? null : <Col span={10} offset={4}>
-            <Card>
+            <Card hoverable style={{ boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)', borderRadius: '15px' }}>
               <div
                 style={{
                   display: "flex",
@@ -535,13 +481,20 @@ const RecommendPage = () => {
 
 
                 <Row style={{ alignItems: "center", gap: "20px" }}>
-                  <img src={explainIMG} width={100}></img>
+
+                  <img src={explainIMG} style={{ width: "100px" }}></img>
+
                   <Button
                     type="primary"
                     size="large"
-                    style={{fontSize:'28px',padding:'30px 24px', display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'}}
+                    style={{
+                      fontSize: '28px', padding: '30px 24px', display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginLeft: '10px',
+                      width: '300px',
+                      height: '80px',
+                    }}
                     onClick={async () => {
                       setShowExplain(true);
                       try {
@@ -563,30 +516,34 @@ const RecommendPage = () => {
                     Explanation
                   </Button>
                 </Row>
-                <Text strong>
+                <Text strong style={{ fontSize: "24px" }}>
                   {" "}
                   To give you a better understanding of AI's recommendation, please click the {" "}“
-                  <Text style={{ color: "red" }}>
-                  Explanation
+                  <Text style={{ color: "red", fontSize: "24px" }}>
+                    Explanation
                   </Text>”{" "}
                   button.
                 </Text>
+
+
               </div>
+
+
             </Card>
           </Col>}
 
         </Row>
 
- <div
- style={{
-  borderRadius: "20px",
-  padding: "5px 20px",
-  margin: "10px 40px",
-  marginBottom:"30px"
-}}
- >
+        <div
+          style={{
+            borderRadius: "20px",
+            padding: "5px 20px",
+            margin: "10px 40px",
+            marginBottom: "30px"
+          }}
+        >
 
- </div>
+        </div>
 
         <div
           style={{
@@ -597,29 +554,29 @@ const RecommendPage = () => {
           }}
         >
 
-<h3>Report summary:</h3>
+          <h3>Report summary:</h3>
 
-<Row>
-  <Text>
-    According to the AI hiring system's analysis,{" "}
-    <Text strong underline>
-      Candidate D
-    </Text>{" "}
-    will perform well in the further for the Sales Representative Position after joining the company,
-    compared to Candidate A, B and C. Therefore, it is recommended that your company should offer the job to{" "}
-    <Text strong underline>
-      Candidate D
-    </Text>.
-  </Text>
-</Row>
+          <Row>
+            <Text>
+              According to the AI hiring system's analysis,{" "}
+              <Text strong underline>
+                Candidate D
+              </Text>{" "}
+              will perform well in the further for the Sales Representative Position after joining the company,
+              compared to Candidate A, B and C. Therefore, it is recommended that your company should offer the job to{" "}
+              <Text strong underline>
+                Candidate D
+              </Text>.
+            </Text>
+          </Row>
 
-<Row>
-  <Text >
-    <Text strong underline>
-    The overall performance
-    </Text> {" "} of four candidates evaluated by AI is as bellows. 
-  </Text>
-</Row>
+          <Row>
+            <Text >
+              <Text strong underline>
+                The overall performance
+              </Text> {" "} of four candidates evaluated by AI is as bellows.
+            </Text>
+          </Row>
 
           <h3>Overall Performance</h3>
           <Row style={{ justifyContent: "space-around", marginBottom: "20px" }}>
@@ -645,13 +602,13 @@ const RecommendPage = () => {
           }}
         >
           <div >
-          <Text strong style={{fontSize:'20px'}}>
-            {" "}
-            The following is the{" "}
-            <Text style={{ color: "red",fontSize:'20px' }}>individual detailed score</Text> for
-            the CV, game-based assessment, and video interview assessment, all
-            of which contribute to the overall score provided by AI.
-          </Text>
+            <Text strong style={{ fontSize: '20px' }}>
+              {" "}
+              The following is the{" "}
+              <Text style={{ color: "red", fontSize: '20px' }}>individual detailed score</Text> for
+              the CV, game-based assessment, and video interview assessment, all
+              of which contribute to the overall score provided by AI.
+            </Text>
           </div>
         </div>
 

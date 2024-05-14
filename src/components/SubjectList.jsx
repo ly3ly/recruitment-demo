@@ -1,23 +1,164 @@
+
+import timestamp2timestring from "../services/time";
+
 import { useEffect, useState } from "react"
 import { Table, message } from "antd"
-const { Column } = Table;
 import { GetRecordList as GetSubjectOptListApi } from "../services/user"
 
-import { useNavigate } from 'react-router-dom';
 
+/*
+const data = [
+    {
+        "key": "e560fe6a02801872f495fafc20c875c1",
+        "SerialUUID": "e560fe6a02801872f495fafc20c875c1",
+        "UserId": 1,
+        "UserName": "123123123123123123123232",
+        "VisitTime": 1709708107,
+        "LeaveTime": 1709709340,
+        "VisitTime_t": 1233,
+        "PageActiveTime_t": 1173,
+        "VisitType": 1,
+        "ExplainRecords": [
+            {
+                "ExplainOpenTime": 1709708164,
+                "ExplainCloseTime": 1709708181,
+                "ExplainTime_t": 17,
+                "ExplainActiveTime_t": 17
+            },
+            {
+                "ExplainOpenTime": 1709708164,
+                "ExplainCloseTime": 1709708181,
+                "ExplainTime_t": 17,
+                "ExplainActiveTime_t": 17
+            },
+            {
+                "ExplainOpenTime": 1709708164,
+                "ExplainCloseTime": 1709708181,
+                "ExplainTime_t": 17,
+                "ExplainActiveTime_t": 17
+            },
+            {
+                "ExplainOpenTime": 1709708164,
+                "ExplainCloseTime": 1709708181,
+                "ExplainTime_t": 17,
+                "ExplainActiveTime_t": 17
+            },
+            {
+                "ExplainOpenTime": 1709708164,
+                "ExplainCloseTime": 1709708181,
+                "ExplainTime_t": 17,
+                "ExplainActiveTime_t": 17
+            },
+            {
+                "ExplainOpenTime": 1709708164,
+                "ExplainCloseTime": 1709708181,
+                "ExplainTime_t": 17,
+                "ExplainActiveTime_t": 17
+            }
+        ],
+        "ExplainSumTime": 102,
+        "ExplainSumActiveTime": 102
+    }
+]*/
+
+const columns = [
+    { width: '150px', align: "center", title: 'Operator', dataIndex: 'UserName', key: 'UserName' },
+    { width: '150px', align: "center", title: 'Operate Index', dataIndex: 'SerialUUID', key: 'SerialUUID' },
+    {
+        align: "center", title: 'Explanation Type', dataIndex: 'VisitType', key: 'VisitType', filters: [
+            {
+                text: 'input-process-output',
+                value: 1,
+            },
+            {
+                text: 'input',
+                value: 2,
+            },
+            {
+                text: 'process',
+                value: 3,
+            },
+            {
+                text: 'output',
+                value: 4,
+            },
+            {
+                text: 'none',
+                value: 5,
+            },
+        ],
+        onFilter: (value, record) => record.VisitType == value,
+        sorter: (a, b) => a.VisitType - b.VisitType,
+        render: (text) => <div>{text == 1 ? 'input-process-output' : text == 2 ? 'input' : text == 3 ? 'process' : text == 4 ? 'output' : text == 5 ? 'none' : 'undefined'}</div>,
+    },
+    {
+        align: "center",
+        title: 'Visit Time',
+        dataIndex: 'VisitTime',
+        key: 'VisitTime',
+        sorter: (a, b) => a.VisitTime - b.VisitTime,
+        render: (text) => <div>{timestamp2timestring(String(text))}</div>
+    },
+    {
+        align: "center",
+        title: 'Leave Time',
+        dataIndex: 'LeaveTime',
+        key: 'LeaveTime',
+        sorter: (a, b) => a.LeaveTime - b.LeaveTime,
+        render: (text) => <div>{timestamp2timestring(String(text))}</div>
+    },
+    {
+        align: "center",
+        title: 'Visit Duration',
+        dataIndex: 'VisitTime_t',
+        key: 'VisitTime_t',
+        sorter: (a, b) => a.VisitTime_t - b.VisitTime_t,
+        render: (text) => <div>{text}s</div>
+    },
+    {
+        align: "center",
+        title: 'Page Active Duration',
+        dataIndex: 'PageActiveTime_t',
+        key: 'PageActiveTime_t',
+        sorter: (a, b) => a.PageActiveTime_t - b.PageActiveTime_t,
+        render: (text) => <div>{text}s</div>
+    },
+    {
+        align: "center",
+        title: 'Explain Duration',
+        dataIndex: 'ExplainSumTime',
+        key: 'ExplainSumTime',
+        sorter: (a, b) => a.ExplainSumTime - b.ExplainSumTime,
+        render: (text) => <div>{text}s</div>
+    },
+    {
+        align: "center",
+        title: 'Explain Active Duration',
+        dataIndex: 'ExplainSumActiveTime',
+        key: 'ExplainSumActiveTime',
+        sorter: (a, b) => a.ExplainSumActiveTime - b.ExplainSumActiveTime,
+        render: (text) => <div>{text}s</div>
+    },
+];
+const _columns = [
+    { align: "center", title: 'Explain Open Time', dataIndex: 'ExplainOpenTime', key: 'ExplainOpenTime', render: (text) => <div>{timestamp2timestring(String(text))}</div> },
+    { align: "center", title: 'Explain Close Time', dataIndex: 'ExplainCloseTime', key: 'ExplainCloseTime', render: (text) => <div>{timestamp2timestring(String(text))}</div> },
+    {
+        align: "center", title: 'Explain Duration', dataIndex: 'ExplainTime_t', key: 'ExplainTime_t', sorter: (a, b) => a.ExplainTime_t - b.ExplainTime_t,
+        render: (text) => <div>{text}s</div>
+    },
+    {
+        align: "center", title: 'Explain Active Duration', dataIndex: 'ExplainActiveTime_t', key: 'ExplainActiveTime_t', sorter: (a, b) => a.ExplainActiveTime_t - b.ExplainActiveTime_t,
+        render: (text) => <div>{text}s</div>
+    },
+]
 
 const SubjectList = () => {
+    const [expandedRows, setExpandedRows] = useState([]);
     const [subjectList, setSubjectList] = useState([]);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
 
     useEffect(() => {
-        // const storedUser = localStorage.getItem('userInfo');
-        // if (storedUser) {
-        //     // setSubject(JSON.parse(storedUser));
-        // } else {
-        //     navigate('/');
-        // }
         getData();
     }, [])
 
@@ -25,14 +166,13 @@ const SubjectList = () => {
         setLoading(true);
         try {
             let res = await GetSubjectOptListApi();
-            console.log(res);
             setLoading(false);
             if (res.code != 0) {
                 message.error(res.msg);
                 return;
             }
             const listData = res.data.map(item => {
-                return { ...item, key: item.ID };
+                return { ...item, key: item.SerialUUID };
             })
 
             setSubjectList(listData);
@@ -44,98 +184,54 @@ const SubjectList = () => {
 
         }
     }
-    const columns = [
-        {
-            align: "center",
-            title: 'Record Index',
-            dataIndex: 'ID',
-            key: 'ID',
-            width: '150px',
-            sorter: (a, b) => a.ID - b.ID,
-            render: (text) => <a>{text}</a>,
-        },
-        {
-            align: "center",
-            title: 'Operator',
-            dataIndex: 'UserName',
-            key: 'UserName',
-            width: '150px',
-            render: (text) => <a>{text}</a>,
-        },
-        {
-            align: "center",
-            title: 'Operate Index',
-            dataIndex: 'SerialUUID',
-            key: 'SerialUUID',
-            width: '170px',
-        },
-        {
-            align: "center",
-            title: 'Explanation Type',
-            dataIndex: 'VisitType',
-            key: 'VisitType',
-            filters: [
-                {
-                    text: 'input-process-output',
-                    value: 1,
-                },
-                {
-                    text: 'input',
-                    value: 2,
-                },
-                {
-                    text: 'process',
-                    value: 3,
-                },
-                {
-                    text: 'output',
-                    value: 4,
-                },
-                {
-                    text: 'none',
-                    value: 5,
-                },
-            ],
-            onFilter: (value, record) => record.VisitType == value,
-            sorter: (a, b) => a.VisitType - b.VisitType,
-            render: (text) => <div>{text == 1 ? 'input-process-output' : text == 2 ? 'input' : text == 3 ? 'process' : text == 4 ? 'output' : text == 5 ? 'none' : 'undefined'}</div>,
-        },
-        {
-            align: "center",
-            title: 'Visit Time',
-            dataIndex: 'VisitTime_t',
-            key: 'VisitTime_t',
-            sorter: (a, b) => a.VisitTime_t - b.VisitTime_t,
-            render: (text) => <div>{text}s</div>
-        },
-        {
-            align: "center",
-            title: 'Explain Time',
-            dataIndex: 'ExplainTime_t',
-            key: 'ExplainTime_t',
-            sorter: (a, b) => a.ExplainTime_t - b.ExplainTime_t,
-            render: (text) => <div>{text}s</div>
-        },
-        {
-            align: "center",
-            title: 'Record Time',
-            dataIndex: 'UpdatedAt',
-            key: 'UpdatedAt',
-            sorter: (a, b) => new Date(a.UpdatedAt) - new Date(b.UpdatedAt),
-        },
-        // {
-        //     align: "center",
-        //     title: 'Operate Time',
-        //     dataIndex: 'OperateTime',
-        //     key: 'OperateTime',
-        //     render: (text) => <a style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>{new Date(text * 1000).toLocaleDateString("en-US")} - {new Date(text * 1000).toLocaleTimeString("it-IT")}</a>,
-        // }
-    ]
-    return (
-        <>
-            <Table dataSource={subjectList} columns={columns} pagination={false} sticky style={{ marginTop: '20px' }} loading={loading} />
-        </>
-    )
-}
 
-export default SubjectList
+    const handleExpand = (expanded, record) => {
+        // 判断是否展开或收起
+        if (expanded) {
+            // 将展开的行记录添加到 expandedRows 数组中
+            setExpandedRows([...expandedRows, record.key]);
+        } else {
+            // 将收起的行记录从 expandedRows 数组中移除
+            setExpandedRows(expandedRows.filter(key => key !== record.key));
+        }
+    };
+
+    // 表格列配置
+
+
+    // 扩展行渲染
+    const expandedRowRender = (record) => {
+        // const _data = record.ExplainRecords
+        const _data = record.ExplainRecords.map((item, index) => {
+            return { ...item, key: index };
+        })
+
+        return (
+            <Table
+                dataSource={_data}
+                columns={_columns}
+                pagination={false}
+                size="small"
+            />
+        );
+    };
+
+    // 设置行可展开
+    const rowExpandable = (record) => {
+        return record.ExplainRecords?.length > 0;
+    };
+
+    return (
+        <Table
+            dataSource={subjectList}
+            columns={columns}
+            expandable={{ onExpand: handleExpand, expandedRowKeys: expandedRows, expandedRowRender }}
+            rowExpandable={rowExpandable}
+            pagination={false}
+            key={'SerialUUID'}
+            sticky style={{ marginTop: '20px' }} loading={loading}
+        />
+    );
+};
+
+export default SubjectList;

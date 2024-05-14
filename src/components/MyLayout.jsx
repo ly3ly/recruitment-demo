@@ -102,7 +102,7 @@ const MyLayout = ({ children }) => {
                     background: colorBgContainer,
                 }}
             >
-                Department of Information Systems ©2023 City University of Hong Kong
+                Department of Information Systems ©2024 City University of Hong Kong
             </Footer>
 
             <FloatButton.Group
