@@ -4,12 +4,11 @@
  * 服务器地址
  */
 // export const serverUrl = "http://43.156.54.192";
-// const serverIP = "127.0.0.1:3000";
-const serverIP = "43.156.54.192";
-export const serverUrl = `http://${serverIP}`;
-export const wsUrl = `ws://${serverIP}/echo`;
-// export const serverUrl = `http://127.0.0.1:3000`;
-// export const wsUrl = `ws://127.0.0.1:6000/echo`;
+
+export const serverUrl = "https://cityu-talent.online"
+
+// export const serverUrl = `http://localhost:3000`;
+
 
 /**
  * 设置token

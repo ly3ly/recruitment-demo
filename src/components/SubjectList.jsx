@@ -62,10 +62,10 @@ const data = [
 ]*/
 
 const columns = [
-    { width: '150px', align: "center", title: 'Operator', dataIndex: 'UserName', key: 'UserName' },
-    { width: '150px', align: "center", title: 'Operate Index', dataIndex: 'SerialUUID', key: 'SerialUUID' },
+    { width: '150px', align: "center", title: 'Operator', dataIndex: 'user_name', key: 'user_name' },
+    { width: '150px', align: "center", title: 'Operate Index', dataIndex: 'serial_id', key: 'serial_id' },
     {
-        align: "center", title: 'Explanation Type', dataIndex: 'VisitType', key: 'VisitType', filters: [
+        align: "center", title: 'Explanation Type', dataIndex: 'visit_type', key: 'visit_type', filters: [
             {
                 text: 'input-process-output',
                 value: 1,
@@ -86,57 +86,69 @@ const columns = [
                 text: 'none',
                 value: 5,
             },
+            {
+                text: 'input-process',
+                value: 6,
+            },
+            {
+                text: 'input-output',
+                value: 7,
+            },
+            {
+                text: 'process-output',
+                value: 8,
+            },
         ],
         onFilter: (value, record) => record.VisitType == value,
         sorter: (a, b) => a.VisitType - b.VisitType,
-        render: (text) => <div>{text == 1 ? 'input-process-output' : text == 2 ? 'input' : text == 3 ? 'process' : text == 4 ? 'output' : text == 5 ? 'none' : 'undefined'}</div>,
+        render: (text) => <div>{text == 1 ? 'input-process-output' : text == 2 ? 'input' : text == 3 ? 'process' : text == 4 ? 'output' : text == 5 ? 'none' : text == 6 ? 'input-process' : text == 7 ? 'input-output' : text == 8 ? 'process-output' : 'undefined'}</div>,
     },
     {
         align: "center",
         title: 'Visit Time',
-        dataIndex: 'VisitTime',
-        key: 'VisitTime',
-        sorter: (a, b) => a.VisitTime - b.VisitTime,
+        dataIndex: 'page_enter_time',
+        key: 'page_enter_time',
+        sorter: (a, b) => a.page_enter_time - b.page_enter_time,
         render: (text) => <div>{timestamp2timestring(String(text))}</div>
     },
     {
         align: "center",
         title: 'Leave Time',
-        dataIndex: 'LeaveTime',
-        key: 'LeaveTime',
-        sorter: (a, b) => a.LeaveTime - b.LeaveTime,
+        dataIndex: 'page_leave_time',
+        key: 'page_leave_time',
+        sorter: (a, b) => a.page_leave_time - b.page_leave_time,
         render: (text) => <div>{timestamp2timestring(String(text))}</div>
     },
     {
         align: "center",
         title: 'Visit Duration',
-        dataIndex: 'VisitTime_t',
-        key: 'VisitTime_t',
-        sorter: (a, b) => a.VisitTime_t - b.VisitTime_t,
+        dataIndex: 'page_total_time',
+        key: 'page_total_time',
+        sorter: (a, b) => a.page_total_time - b.page_total_time,
         render: (text) => <div>{text}s</div>
     },
     {
         align: "center",
         title: 'Page Active Duration',
-        dataIndex: 'PageActiveTime_t',
-        key: 'PageActiveTime_t',
-        sorter: (a, b) => a.PageActiveTime_t - b.PageActiveTime_t,
+        dataIndex: 'page_active_time',
+        key: 'page_active_time',
+        sorter: (a, b) => a.page_active_time - b.page_active_time,
         render: (text) => <div>{text}s</div>
     },
     {
         align: "center",
         title: 'Explain Duration',
-        dataIndex: 'ExplainSumTime',
-        key: 'ExplainSumTime',
-        sorter: (a, b) => a.ExplainSumTime - b.ExplainSumTime,
+        dataIndex: 'explain_total_time',
+        key: 'explain_total_time',
+        sorter: (a, b) => a.explain_total_time - b.explain_total_time,
         render: (text) => <div>{text}s</div>
     },
     {
         align: "center",
         title: 'Explain Active Duration',
-        dataIndex: 'ExplainSumActiveTime',
-        key: 'ExplainSumActiveTime',
-        sorter: (a, b) => a.ExplainSumActiveTime - b.ExplainSumActiveTime,
+        dataIndex: 'explain_active_time',
+        key: 'explain_active_time',
+        sorter: (a, b) => a.explain_active_time - b.explain_active_time,
         render: (text) => <div>{text}s</div>
     },
 ];
@@ -172,7 +184,7 @@ const SubjectList = () => {
                 return;
             }
             const listData = res.data.map(item => {
-                return { ...item, key: item.SerialUUID };
+                return { ...item, key: item.serial_id };
             })
 
             setSubjectList(listData);
@@ -228,7 +240,7 @@ const SubjectList = () => {
             expandable={{ onExpand: handleExpand, expandedRowKeys: expandedRows, expandedRowRender }}
             rowExpandable={rowExpandable}
             pagination={false}
-            key={'SerialUUID'}
+            key={'serial_id'}
             sticky style={{ marginTop: '20px' }} loading={loading}
         />
     );

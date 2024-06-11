@@ -16,10 +16,12 @@ import AvatarItem from "./AvatarItem";
 import DespCard from "./DespCard";
 import { Col, Row, Card } from "antd";
 import explainIMG from "../assets/explain.svg";
-import { UpdateOptTime as UpdateTimeApi, UpdateUserInActive as UpdateUserInActiveApi } from "../services/user";
+import { UpdateOptTime as UpdateTimeApi, UpdateUserInActive as UpdateUserInActiveApi, ReportUserActivity, ReportPage } from "../services/user";
 import { VISIT_TYPE } from "../services/user";
-import { getToken, wsUrl } from "../services/tools";
+import { getToken } from "../services/tools";
 import PromoteCard from './PromoteCard'
+import throttle from 'lodash.throttle';
+
 
 const CandidateCard = ({ candidate_name, match_rate, sid1, sid2, desp2 }) => {
   return (
@@ -224,90 +226,142 @@ const RecommendPage = () => {
   const [showExplain, setShowExplain] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
+  const THROTTLE_TIME = 1000;
+  const REPORT_INTERVAL = 1000 * 5; // 5 seconds
+
+
   useEffect(() => {
     const storedUser = localStorage.getItem("userInfo");
     setUserInfo(JSON.parse(storedUser))
-
-    const ws = new WebSocket(wsUrl);
-
-    ws.onopen = function (event) {
-      console.log('connected');
-      var msg = getToken();
-      console.log(event.data, msg);
-      if (msg != "") {
-        ws.send(getToken());
+    // var msg = getToken();
+    const handleUserActivity = throttle(async (event) => {
+      
+      let reportInfo = {
+        user_name: userInfo.subject_name,
+        visit_type: VISIT_TYPE,
+        serial_uuid: userInfo.serial_uuid,
+        time: Math.floor(new Date().getTime() / 1000),
+        active_type: event.type,
+        page_type: showExplain == true ? 2 : 1,
       }
-    }
-    ws.onmessage = function (event) {
-      var msg = getToken();
-      console.log(event.data, msg);
-      if (msg != "") {
-        ws.send(getToken());
+
+      console.log("event", event.type,reportInfo.time);
+      let res = await ReportUserActivity(reportInfo);
+      if (res.code != 0) {
+        console.log('report error...', reportInfo.time, res.msg)
+      }
+      // else{
+      //   console.log('report success...', reportInfo.time)
+      // }
+    }, THROTTLE_TIME)
+
+    const reportData = async () => {
+      // 在此处添加向后端上报数据的逻辑
+      
+      let reportInfo = {
+        user_name: userInfo.subject_name,
+        visit_type: VISIT_TYPE,
+        serial_uuid: userInfo.serial_uuid,
+        time: Math.floor(new Date().getTime() / 1000),
+        interval: REPORT_INTERVAL/1000,
+        page_type: showExplain == true ? 2 : 1,
+      }
+      console.log('reporting...', reportInfo.time)
+      let res = await ReportPage(reportInfo);
+      if (res.code != 0) {
+        console.log('report error...', reportInfo.time, res.msg)
+      } 
+      // else {
+      //   console.log('report success...', reportInfo.time)
+      // }
+
+    };
+
+    let reportInterval;
+
+    const startReporting = () => {
+      if (reportInterval) {
+        return;
+      }
+      reportInterval = setInterval(reportData, REPORT_INTERVAL); // 每 5 秒上报一次
+    };
+
+    const stopReporting = () => {
+      if (!reportInterval) {
+        return;
+      }
+      clearInterval(reportInterval);
+      reportInterval = undefined;
+    };
+
+    let isPageVisible = true;
+
+    const handleVisibilityChange = () => {
+      isPageVisible = !document.hidden;
+      if (isPageVisible) {
+        startReporting();
+      } else {
+        stopReporting();
       }
     };
-    return () => {
-      ws.close();
+
+    const handlePageBlur = () => {
+      console.log('blur')
+      isPageVisible = false;
+      stopReporting();
     };
 
-  }, []);
+    const handlePageFocus = () => {
+      console.log('focus')
+      isPageVisible = true;
+      startReporting();
+    };
 
 
 
-  const reportInactivity = async () => {
-    const inactive = 60
-    // console.log('showExplain', showExplain)
-    console.log(userInfo.serial_uuid)
-    let res = await UpdateUserInActiveApi({
-      time: inactive,
-      serial_uuid: userInfo.serial_uuid,
-      type: showExplain == true ? 2 : 1,
-    })
-    if (res.code != 0) {
-      console.log(res.msg)
-    }
-  };
+    // document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('blur', handlePageBlur);
+    window.addEventListener('focus', handlePageFocus);
+    // window.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('mousemove', handleUserActivity);
+    window.addEventListener('wheel', handleUserActivity);
+    window.addEventListener('mousedown', handleUserActivity);
+    window.addEventListener('keydown', handleUserActivity);
 
-  let intervalId; // 用于存储 setInterval 返回的 ID
-
-  function triggerEvent() {
-    // console.log("report"); // 在这里替换为你想要的触发操作
-
-    reportInactivity()
-
-    // 重置定时器
-    resetTrigger();
-  }
-
-  function resetTrigger() {
-    clearInterval(intervalId); // 清除之前的定时器
-    // 创建新的定时器
-    intervalId = setInterval(triggerEvent, 60 * 1000);
-  }
-
-  function handleActivity() {
-    resetTrigger();
-  }
-
-
-  useEffect(() => {
-    // 初始启动定时器
-    resetTrigger();
-
-    // 绑定页面活动事件监听器
-    window.addEventListener('mousemove', handleActivity);
-    window.addEventListener('keydown', handleActivity);
+    startReporting();
 
     return () => {
-      // 在组件卸载时解绑事件监听器和清除定时器
-      window.removeEventListener('mousemove', handleActivity);
-      window.removeEventListener('keydown', handleActivity);
-      clearInterval(intervalId);
+      window.removeEventListener('mousemove', handleUserActivity);
+      window.removeEventListener('wheel', handleUserActivity);
+      window.removeEventListener('mousedown', handleUserActivity);
+      window.removeEventListener('keydown', handleUserActivity);
+      window.removeEventListener('blur', handlePageBlur);
+      window.removeEventListener('focus', handlePageFocus);
+      // window.removeEventListener('visibilitychange', handleVisibilityChange);
+      // document.removeEventListener('visibilitychange', handleVisibilityChange);
+      stopReporting();
     };
-  }, []);
+  }, [REPORT_INTERVAL, userInfo.serial_uuid,showExplain]);
+
+
+
+
+  // const reportInactivity = async () => {
+  //   const inactive = 60
+  //   // console.log('showExplain', showExplain)
+  //   console.log(userInfo.serial_uuid)
+  //   let res = await UpdateUserInActiveApi({
+  //     time: inactive,
+  //     serial_uuid: userInfo.serial_uuid,
+  //     type: showExplain == true ? 2 : 1,
+  //   })
+  //   if (res.code != 0) {
+  //     console.log(res.msg)
+  //   }
+  // };
 
   return (
     <>
-
       <Modal
         width="80%"
         open={showExplain}
@@ -336,7 +390,7 @@ const RecommendPage = () => {
         }}
       // style={{ maxHeight: "80vh", overflow: "scroll" }}
       >
-        {VISIT_TYPE == 1 || VISIT_TYPE == 2 || VISIT_TYPE == 6 || VISIT_TYPE == 7? <div> {VISIT_TYPE == 1 || VISIT_TYPE == 6 || VISIT_TYPE == 7? <Title level={3}>Input Explanation:</Title> : null}
+        {VISIT_TYPE == 1 || VISIT_TYPE == 2 || VISIT_TYPE == 6 || VISIT_TYPE == 7 ? <div> {VISIT_TYPE == 1 || VISIT_TYPE == 6 || VISIT_TYPE == 7 ? <Title level={3}>Input Explanation:</Title> : null}
           <p style={{ textAlign: "justify" }}>
             This AI hiring system employs a range of input data from CV screening to interactive evaluations including game-based assessment and video interview assessment. In CV screening, AI will utilize the working experience, skills and qualifications from both candidates and successful employees. In game-based assessment, the candidates' reactions in game such as time taken and decision made will be recorded. In video interview assessment, candidates’ verbal, paraverbal, and nonverbal behaviors will be extracted.
           </p>
@@ -344,9 +398,9 @@ const RecommendPage = () => {
             Overall, the AI hiring system forms a comprehensive dataset from diverse sources, including candidates’ CVs and profiles of successful employees, as well as game-based assessments and video interview evaluations, to identify candidates who meet organizational requirements and exhibit desired traits.
           </p></div> : null}
 
-        {VISIT_TYPE == 1 || VISIT_TYPE == 3 || VISIT_TYPE == 6 || VISIT_TYPE == 8? <div>
+        {VISIT_TYPE == 1 || VISIT_TYPE == 3 || VISIT_TYPE == 6 || VISIT_TYPE == 8 ? <div>
 
-          {VISIT_TYPE == 1 || VISIT_TYPE == 6 || VISIT_TYPE == 8? <Title level={3}>Process Explanation:</Title> : null}
+          {VISIT_TYPE == 1 || VISIT_TYPE == 6 || VISIT_TYPE == 8 ? <Title level={3}>Process Explanation:</Title> : null}
 
           <p style={{ textAlign: "justify" }}>
             The AI hiring system employs machine learning (ML) algorithms and natural language processing (NLP) to analyze input data from CVs, game-based assessments, and video interviews. During CV screening, ML and NLP are used to extract relevant information by deconstructing words and phrases according to predefined grammatical rules. The AI then compares this information against profiles of successful employees to assign scores. In game-based assessments, it identifies behavioral patterns to evaluate cognitive abilities.  Finally, in video interviews, the system assesses candidates' responses, measuring their alignment with the company's target profile to determine their suitability for the job and the organization.
@@ -356,8 +410,8 @@ const RecommendPage = () => {
           </p></div> : null}
 
 
-        {VISIT_TYPE == 1 || VISIT_TYPE == 4 || VISIT_TYPE == 7|| VISIT_TYPE == 8? <div>
-          {VISIT_TYPE == 1 || VISIT_TYPE == 7|| VISIT_TYPE == 8? <Title level={3}>Output Explanation:</Title> : null}
+        {VISIT_TYPE == 1 || VISIT_TYPE == 4 || VISIT_TYPE == 7 || VISIT_TYPE == 8 ? <div>
+          {VISIT_TYPE == 1 || VISIT_TYPE == 7 || VISIT_TYPE == 8 ? <Title level={3}>Output Explanation:</Title> : null}
           <p style={{ textAlign: "justify" }}>
             Through the AI hiring system's comprehensive evaluation, four
             candidates A, B, C, and D were assessed via CV screening, game-based

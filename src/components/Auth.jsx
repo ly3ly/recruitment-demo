@@ -1,5 +1,4 @@
-import { Row, Col, Card, Form, Input, Button, Typography } from "antd";
-const { Text } = Typography;
+import { Row, Col, Card, Form, Input, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Login as LoginApi, UpdateOptTime as UpdateTimeApi } from "../services/user";
 import { message } from 'antd';

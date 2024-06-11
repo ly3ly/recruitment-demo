@@ -29,4 +29,10 @@ export const GetRecordList = () => get(serverUrl + "/api/v1/admin/user/records")
 
 export const UpdateUserInActive = (data) => post(serverUrl + "/api/v1/user/inactive", data);
 
+export const ReportUserActivity = (data) => post(serverUrl + "/api/v1/user/activity", data);
+
+export const ReportPage = (data) => post(serverUrl + "/api/v1/user/page", data);
+
+export const Ping = (data) => post(serverUrl + "/api/v1/ping", data);
+
 export const VISIT_TYPE = 8;

@@ -5,7 +5,7 @@
 #!/bin/bash
 
 file_path='./src/services/user.js'  # 文件名
-line_number=32  # 要替换的行号
+line_number=38  # 要替换的行号
 explainType="export const VISIT_TYPE = 1;"  # 要替换的内容
 
 sed -i'' -e "${line_number}s/.*/${explainType}/g" ${file_path}
