@@ -243,6 +243,7 @@ const RecommendPage = () => {
         time: Math.floor(new Date().getTime() / 1000),
         active_type: event.type,
         page_type: showExplain == true ? 2 : 1,
+        explain_open:showExplain,
       }
 
       console.log("event", event.type,reportInfo.time);
@@ -265,6 +266,7 @@ const RecommendPage = () => {
         time: Math.floor(new Date().getTime() / 1000),
         interval: REPORT_INTERVAL/1000,
         page_type: showExplain == true ? 2 : 1,
+        explain_open:showExplain,
       }
       console.log('reporting...', reportInfo.time)
       let res = await ReportPage(reportInfo);
